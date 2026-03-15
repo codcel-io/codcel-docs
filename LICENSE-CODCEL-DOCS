@@ -1,0 +1,69 @@
+Codcel Documentation License
+Version 1.0 — 2026
+
+Copyright (c) 2026 Codcel
+
+All rights reserved.
+
+----------------------------------------------------------------------
+Overview
+----------------------------------------------------------------------
+
+This documentation is available under multiple licenses:
+
+1. Creative Commons Attribution 4.0 (CC-BY-4.0)
+2. Codcel Documentation License
+
+You may choose which license applies to your use.
+
+If your use falls within the definition of an Automated Code Generation
+System (defined below), you must use the Codcel Documentation License.
+
+----------------------------------------------------------------------
+Definition of Automated Code Generation System
+----------------------------------------------------------------------
+
+For the purposes of this license, an "Automated Code Generation System"
+means any software, platform, or service that automatically generates
+source code, applications, APIs, services, or other software artifacts
+from spreadsheets, models, schemas, specifications, or other structured
+non-code inputs.
+
+Examples include but are not limited to:
+
+- Spreadsheet-to-code generators
+- Model-to-code platforms
+- Configuration-to-code systems
+- Services that automatically generate software for users
+
+----------------------------------------------------------------------
+Commercial Restriction
+----------------------------------------------------------------------
+
+This documentation may not be used, copied, adapted, or incorporated
+into any Automated Code Generation System or competing spreadsheet-to-code
+platform without an explicit commercial license from Codcel.
+
+----------------------------------------------------------------------
+Attribution
+----------------------------------------------------------------------
+
+Redistributions of this documentation must retain this license notice
+and attribution to Codcel.
+
+----------------------------------------------------------------------
+No Warranty
+----------------------------------------------------------------------
+
+THE DOCUMENTATION IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+----------------------------------------------------------------------
+Commercial Licensing
+----------------------------------------------------------------------
+
+For commercial licensing inquiries:
+
+Email: licensing@codcel.io
+Web: https://codcel.io

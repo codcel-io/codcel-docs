@@ -1,0 +1,116 @@
+site_name: Codcel Documentation
+site_url: https://codcel-io.github.io/codcel-docs/
+site_description: >
+  Official documentation for Codcel — convert Excel spreadsheets to production-ready code
+site_author: Codcel
+
+repo_url: https://github.com/codcel-io/codcel-docs
+repo_name: codcel-io/codcel-docs
+edit_uri: edit/main/user-guide/
+
+copyright: >
+  Copyright &copy; 2026 Codcel —
+  <a href="https://github.com/codcel-io/codcel-docs/blob/main/LICENSING.md">CC BY 4.0 / Codcel Documentation License</a>
+
+docs_dir: user-guide
+
+theme:
+  name: material
+  logo: assets/codcel-logo-lockup-dark.svg
+  favicon: assets/codcel-logo-lockup.svg
+  palette:
+    - scheme: default
+      primary: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.action.edit
+    - toc.follow
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/codcel-io
+
+extra_css:
+  - assets/extra.css
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Introduction: introduction.md
+      - Desktop Application: desktop-app.md
+      - Excel to Code: excel-to-code.md
+      - Excel Guidelines: codcel-excel-guidelines.md
+      - Annotations: annotations.md
+      - Settings: settings.md
+      - Runtime Formatting: runtime-formatting.md
+      - CLI: cli.md
+      - Testing: testing.md
+  - Output Targets:
+      - Overview: output-targets.md
+      - Calculation Libraries: output-targets/calculation-libraries.md
+      - REST Servers: output-targets/servers.md
+      - Web Clients: output-targets/web-clients.md
+      - Fullstack UI: output-targets/fullstack-ui.md
+      - Integrations: output-targets/integrations.md
+  - Tables & Data:
+      - Tables: tables.md
+      - Table Functions: table-functions.md
+      - CRUD Tables: crud-tables.md
+      - Named Ranges: named-ranges.md
+  - Excel Concepts:
+      - Dynamic Arrays: dynamic-arrays.md
+      - Functional Programming: functional-programming.md
+      - Circular References: circular-references.md
+  - Function Reference:
+      - Alphabetical List: alphabetical-functions.md
+      - Mathematical Functions: mathematical-functions.md
+      - Statistical Functions: statistical-functions.md
+      - Text Functions: text-functions.md
+      - Conditional Functions: conditional-functions.md
+      - Engineering Functions: engineering-functions.md
+      - Financial Functions: financial-functions.md
+      - Logical Functions: logical-functions.md
+      - Compatibility Functions: compatibility-functions.md
+      - Date & Time Functions: date-time-functions.md
+      - Lookup & Reference Functions: lookup-and-reference-functions.md
+      - Information Functions: information-functions.md
+  - UI & Configuration:
+      - Settings: settings.md
+      - UI Configuration: ui-configuration.md
+  - Differences:
+      - Overview: differences.md
+  - Performance:
+      - Big Data: big-data.md
+      - One Billion Row Challenge: one-billion-row-challenge.md
+  - Troubleshooting: error-codes.md
+  - Architecture: architecture.md

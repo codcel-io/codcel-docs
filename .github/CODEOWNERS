@@ -1,0 +1,16 @@
+# Default owner for the whole repository
+* @codcel-io
+
+# Legal / governance files
+/LICENSE-CC-BY @codcel-io
+/LICENSE-CODCEL-DOCS @codcel-io
+/LICENSING.md @codcel-io
+/CONTRIBUTING.md @codcel-io
+/README.md @codcel-io
+
+# GitHub workflow / issue routing
+/.github/ISSUE_TEMPLATE/ @codcel-io
+/.github/CODEOWNERS @codcel-io
+
+# Docs can still default to you, or later to docs maintainers
+/user-guide/ @codcel-io

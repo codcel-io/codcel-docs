@@ -1,0 +1,17 @@
+:root {
+  --md-primary-fg-color: #0f172a;
+  --md-primary-fg-color--light: #1e293b;
+  --md-primary-fg-color--dark: #020617;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #ffffff;
+  --md-accent-fg-color: #4f46e5;
+  --md-typeset-a-color: #4f46e5;
+}
+
+.md-typeset a {
+  color: #4f46e5;
+}
+
+.md-typeset a:hover {
+  color: #6366f1;
+}
