@@ -7,13 +7,13 @@ See LICENSING.md for details.
 
 # Massive Tables
 
-If you require tables that contain more than 1,048,576 rows -- up to billions of rows -- Codcel can handle them using external CSV files backed by the high-performance Parquet columnar storage engine.
+If you require tables that contain more than 1,048,576 rows -- up to billions of rows -- Codcel can handle them using external CSV or Parquet files backed by the high-performance Parquet columnar storage engine.
 
 ---
 
 ## Overview
 
-Excel has a limit of 1,048,576 rows per sheet. For datasets that exceed this limit, Codcel allows you to provide the data as a separate CSV file. During code generation, the CSV data is converted to Parquet format and queried using the Apache DataFusion SQL engine, enabling efficient lookups and filtering across billions of rows.
+Excel has a limit of 1,048,576 rows per sheet. For datasets that exceed this limit, Codcel allows you to provide the data as a separate CSV or Parquet file. During code generation, the data is converted to Parquet format (if not already) and queried using the Apache DataFusion SQL engine, enabling efficient lookups and filtering across billions of rows.
 
 Massive tables are **read-only**. You can use lookup and filtering functions on them, but CRUD operations (add, update, delete) are not supported. For tables that need CRUD operations, see [CRUD Tables](./crud-tables.md).
 
@@ -35,15 +35,31 @@ Hamburg;11.2
 Berlin;7.8
 ```
 
+### 1b. Or Provide Parquet Files
+
+If your data is already in Parquet format (e.g., from a Spark or Hive pipeline), you can provide it directly without converting to CSV first.
+
+Parquet files are **self-describing** -- no header or delimiter configuration is needed. Columns are automatically mapped by position to match the Excel sheet's column headers.
+
+A single table can be split across **multiple Parquet files** using prefix naming. For example, for a sheet named `T_Sales`:
+
+- `T_Sales.parquet` -- single file
+- `T_Sales.parquet`, `T_Sales_part1.parquet`, `T_Sales_part2.parquet` -- split across files
+
+All files whose name starts with the sheet name (without the `T_` prefix) followed by a separator (`_`, `-`, or digit) are automatically grouped together.
+
+!!! note
+    If both Parquet and CSV files exist for the same table, the Parquet files take priority.
+
 ### 2. Name the CSV File to Match Your Excel Sheet
 
-The CSV file name must match an Excel sheet name that uses the `T_` prefix. For example:
+The data file name must match an Excel sheet name that uses the `T_` prefix. For example:
 
-| Excel Sheet Name | CSV File Name |
-|------------------|---------------|
-| `T_Measurements` | `T_Measurements.csv` |
-| `T_Addresses` | `T_Addresses.csv` |
-| `T_Transactions` | `T_Transactions.csv` |
+| Excel Sheet Name | CSV File Name | Parquet File Name(s) |
+|------------------|---------------|----------------------|
+| `T_Measurements` | `T_Measurements.csv` | `T_Measurements.parquet` |
+| `T_Addresses` | `T_Addresses.csv` | `T_Addresses.parquet`, `T_Addresses_part2.parquet` |
+| `T_Transactions` | `T_Transactions.csv` | `T_Transactions.parquet` |
 
 The Excel sheet defines the table's schema (column headers in row 1). The CSV file provides the actual data. The same rules as [Large Tables](./large-tables.md) apply to the Excel sheet: the table must start at column A, row 1 contains column headers, and one table per sheet.
 
@@ -133,7 +149,7 @@ The Parquet engine supports the following column types:
 ## Limitations
 
 - **Read-only**: Massive tables do not support CRUD operations (`ADD_ROW`, `UPDATE_ROW`, `DELETE_ROW`, `READ_ROW`). For mutable tables, use [CRUD Tables](./crud-tables.md) with PostgreSQL.
-- **No formulas in data**: Like large tables, CSV data is static. Formulas in the Excel sheet are computed at import time and cannot reference input parameters.
+- **No formulas in data**: Like large tables, CSV and Parquet data is static. Formulas in the Excel sheet are computed at import time and cannot reference input parameters.
 - **Range parameters ignored**: When calling VLOOKUP or similar functions, the cell range parameter in the formula is ignored -- the query always operates on the entire table.
 
 ---

@@ -7,7 +7,7 @@ See LICENSING.md for details.
 
 # UI Configuration
 
-Codcel can generate user interfaces (via the Fullstack UI output target) that allow users to interact with your calculations through a web application. You can configure these generated UIs directly from within your Excel workbook by adding special configuration sheets.
+Codcel can generate user interfaces that allow users to interact with your calculations. You can configure these generated interfaces directly from within your Excel workbook by adding special configuration sheets. UI configuration is supported by the **Fullstack UI** output target (web application) and the **Excel Python Interface** output target (Excel workbooks with xlwings).
 
 ---
 
@@ -87,14 +87,18 @@ The `codcel-ui-layouts` sheet controls the visual layout and widget types used i
 
 ### Widget Types
 
-| Widget | Description |
-|--------|-------------|
-| `group` | A visual grouping header. The **Name** column contains the group's display label (not converted to snake_case) |
-| `text` | A standard text input field |
-| `slider` | A range slider input |
-| `dropdown` | A dropdown/select menu |
+| Widget | Description | Supported by |
+|--------|-------------|--------------|
+| `group` | A visual grouping header. The **Name** column contains the group's display label (not converted to snake_case) | Fullstack UI, Excel Python Interface |
+| `input` | An input field -- used to specify field ordering without changing the widget type | Fullstack UI, Excel Python Interface |
+| `output` | An output field -- used to specify field ordering without changing the widget type | Fullstack UI, Excel Python Interface |
+| `text` | A standard text input field | Fullstack UI only |
+| `slider` | A range slider input | Fullstack UI only |
+| `dropdown` | A dropdown/select menu | Fullstack UI only |
 
-Multiple layouts can be defined for the same output. Input widgets listed after a `group` entry are visually grouped under that heading in the generated UI.
+Multiple layouts can be defined for the same output. Entries listed after a `group` entry are visually grouped under that heading in the generated interface.
+
+The **Excel Python Interface** supports `group`, `input`, and `output` widgets for controlling field ordering and visual grouping in the generated Excel workbooks. The **Fullstack UI** additionally supports `text`, `slider`, and `dropdown` for controlling how input fields are rendered in the web application.
 
 ---
 
@@ -136,6 +140,6 @@ The generated MCP server exposes each defined tool as an MCP tool that AI assist
 
 - Sheet names are case-insensitive (`codcel-ui-language` and `CODCEL-UI-LANGUAGE` are treated the same)
 - All names are converted to snake_case internally for code generation
-- Configuration sheets are only processed when the corresponding output target is enabled (e.g. Fullstack UI, MCP Server)
+- Configuration sheets are only processed when the corresponding output target is enabled (e.g. Fullstack UI, Excel Python Interface, MCP Server)
 - If you include a configuration sheet but do not enable its output target, the sheet is ignored
 - For best results, ensure that the names used in configuration sheets match the input and output names defined in your spreadsheet's formulas

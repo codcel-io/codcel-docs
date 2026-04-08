@@ -81,6 +81,9 @@ Determines whether CSV files imported as tables are treated as having a header r
 
 The character used to separate fields in CSV files. Common values include `,` (comma), `;` (semicolon), and `\t` (tab).
 
+!!! note
+    Parquet input files require no configuration settings as they are self-describing. Column names, types, and structure are read directly from the Parquet file metadata.
+
 ### Use Excel Rounding
 
 **Default:** `true` (enabled)
@@ -185,6 +188,8 @@ The Rust Calculation Library cannot be disabled. It is the foundation upon which
 | MCP Server | A Model Context Protocol server for AI integration |
 | JNI | Java Native Interface bindings for the Rust calculation engine |
 | FFI Library | Foreign Function Interface library for C-compatible bindings |
+| Excel Python Interface | Excel workbooks (.xlsm) with xlwings integration for Python-powered calculations |
+| Excel Web Client Python Interface | Excel workbooks (.xlsm) with xlwings integration calling a remote REST API via the Python Web Client |
 
 ---
 
@@ -247,6 +252,8 @@ use_codcel_go_web_client = false
 use_codcel_javascript_web_client = false
 use_codcel_typescript_web_client = false
 use_codcel_swift_calculation_library = false
+use_codcel_excel_python_xlwings = false
+use_codcel_excel_web_client_python_xlwings = false
 ```
 
 Changes made through the Settings view and Generate Project view are written to this file automatically when you click Save or Generate.

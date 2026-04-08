@@ -35,12 +35,14 @@ Excel Workbook
      |                   +---> C# Calculation Library
      |                   +---> Visual Basic Calculation Library
      |                   +---> Python Calculation Library
+     |                   |         +---> Excel Python Interface (.xlsm)
      |                   +---> Go Calculation Library
      |                   +---> Swift Calculation Library
      |
      +---> WASM Calculation Library (browser)
      +---> REST Servers (Rust, Java, Kotlin, C#, Go)
      +---> Web Clients (Rust, Java, Kotlin, C#, Python, Go, JS, TS, Swift)
+     |         +---> Excel Web Client Python Interface (.xlsm)
      +---> Fullstack UI (Dioxus)
      +---> Command Line Tool
      +---> MCP Server (AI integration)
@@ -66,6 +68,12 @@ A complete web application with server and UI components, built with the Dioxus 
 ### [Integrations](./output-targets/integrations.md)
 OpenAPI specifications, command-line tools, MCP servers for AI integration, and low-level JNI/FFI bindings.
 
+### [Excel Python Interface](./output-targets/excel-python-interface.md)
+Excel workbooks (.xlsm) with xlwings integration, providing a familiar spreadsheet interface for Python-powered calculations. Requires Microsoft Excel on Windows or macOS.
+
+### [Excel Web Client Python Interface](./output-targets/excel-web-client-python-interface.md)
+Excel workbooks (.xlsm) with xlwings integration that call a remote REST API via the Python Web Client. Requires Microsoft Excel on Windows or macOS and a running Codcel server.
+
 ---
 
 ## Selecting Output Targets
@@ -89,6 +97,10 @@ When building generated projects that depend on native libraries, follow this or
 5. **Build the web client** (if applicable)
 
 The Fullstack UI, Command Line, and MCP Server targets are self-contained Rust projects that only need `cargo build --release`.
+
+The Excel Python Interface requires the FFI Library and Python Calculation Library to be built first, then `pip install -r requirements.txt` in the `excel-python-xlwings/` directory. See [Excel Python Interface](./output-targets/excel-python-interface.md) for details.
+
+The Excel Web Client Python Interface requires a running REST server and the Python Web Client to be installed, then `pip install -r requirements.txt` in the `excel-web-client-python-xlwings/` directory. See [Excel Web Client Python Interface](./output-targets/excel-web-client-python-interface.md) for details.
 
 ---
 

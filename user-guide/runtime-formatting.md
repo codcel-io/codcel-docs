@@ -37,6 +37,7 @@ The following environment variables override formatting at runtime. They take ef
 | `CODCEL_USE_EXCEL_ROUNDING` | Use Excel's 15-digit rounding (`true`/`false`) | `true` |
 | `CODCEL_LANGUAGE` | Language code for locale detection | `de` |
 | `CODCEL_ALLOW_LOTUS_1_2_3_1900_DATE_BUG` | Replicate Excel's 1900 date bug (`true`/`false`) | `true` |
+| `CODCEL_USE_PORTABLE_MATH` | Use portable pure-Rust math for cross-platform determinism (`true`/`false`) | `false` |
 
 ### Example
 

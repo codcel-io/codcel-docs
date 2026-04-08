@@ -14,7 +14,7 @@ Codcel can be run from the command line for automated workflows, CI/CD pipelines
 ## Basic Usage
 
 ```bash
-codcel -e spreadsheet.xlsx -p my-project -g ./generated --templates /path/to/templates --table-path ./tables
+codcel -e spreadsheet.xlsx -p my-project -g ./generated --table-path ./tables
 ```
 
 ---
@@ -28,7 +28,6 @@ codcel -e spreadsheet.xlsx -p my-project -g ./generated --templates /path/to/tem
 | `--excel-path` | `-e` | Path to the Excel file to transpile |
 | `--project` | `-p` | Project name (used in generated code identifiers) |
 | `--generated` | `-g` | Output directory for generated project files |
-| `--templates` | | Path to the Codcel templates directory |
 | `--table-path` | | Path where generated table files are stored |
 
 ### Table Format
@@ -61,6 +60,14 @@ codcel -e spreadsheet.xlsx -p my-project -g ./generated --templates /path/to/tem
 | `--csv-has-header` | `false` | Whether CSV files have a header row |
 | `--csv-delimiter` | `;` | CSV field delimiter character |
 
+### Parquet Input Configuration
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--parquet-files` | *(empty)* | Comma-separated list of Parquet file paths for table data input |
+
+Parquet files are self-describing, so no header or delimiter settings are needed. Multiple Parquet files can provide data for the same table using prefix naming (e.g., `Sales.parquet`, `Sales_part1.parquet`). If both Parquet and CSV files exist for the same table, the Parquet files take priority.
+
 ### Date Handling
 
 | Argument | Default | Description |
@@ -81,6 +88,21 @@ codcel -e spreadsheet.xlsx -p my-project -g ./generated --templates /path/to/tem
 |----------|---------|-------------|
 | `--large-array-threshold` | `100` | Row count above which array constants are externalised to separate files (prevents slow compilation) |
 
+### Engine Versions
+
+Control which versions of the Codcel engine dependencies are used in the generated code. For each engine you can specify either a git **tag** (for releases) or a git **branch** (for development/PR testing). If both tag and branch are specified for the same engine, the tag takes priority. If neither is specified, the generated code defaults to `branch = "main"`.
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--calculation-engine-tag` | *(empty)* | Git tag for codcel-calculation-engine (e.g. `release-0.1.5`) |
+| `--calculation-engine-branch` | *(empty)* | Git branch for codcel-calculation-engine (e.g. `feature/my-branch`) |
+| `--table-engine-tag` | *(empty)* | Git tag for codcel-table-engine |
+| `--table-engine-branch` | *(empty)* | Git branch for codcel-table-engine |
+| `--parquet-engine-tag` | *(empty)* | Git tag for codcel-parquet-engine |
+| `--parquet-engine-branch` | *(empty)* | Git branch for codcel-parquet-engine |
+| `--postgresql-engine-tag` | *(empty)* | Git tag for codcel-postgresql-engine |
+| `--postgresql-engine-branch` | *(empty)* | Git branch for codcel-postgresql-engine |
+
 ---
 
 ## Examples
@@ -92,8 +114,7 @@ codcel \
   -e ./business_specs/mortgage.xlsx \
   -p mortgage-calculator \
   -g ./generated \
-  --templates /opt/codcel/templates \
-  --table-path ./tables
+--table-path ./tables
 ```
 
 ### European Number Formatting
@@ -103,8 +124,7 @@ codcel \
   -e ./specs/report.xlsx \
   -p quarterly-report \
   -g ./generated \
-  --templates /opt/codcel/templates \
-  --table-path ./tables \
+--table-path ./tables \
   -d "," \
   -t "." \
   -c "€"
@@ -117,12 +137,40 @@ codcel \
   -e ./specs/analysis.xlsx \
   -p data-analysis \
   -g ./generated \
-  --templates /opt/codcel/templates \
-  --table-path ./tables \
+--table-path ./tables \
   --table-type parquet \
   --csv-files "T_Measurements.csv,T_Stations.csv" \
   --csv-has-header \
   --csv-delimiter ","
+```
+
+### With Parquet Data Files
+
+```bash
+codcel \
+  -e ./specs/analysis.xlsx \
+  -p data-analysis \
+  -g ./generated \
+--table-path ./tables \
+  --table-type parquet \
+  --parquet-files "T_Measurements.parquet,T_Measurements_part2.parquet"
+```
+
+### Testing a Feature Branch
+
+Use `--*-engine-branch` to point generated code at a development branch. You can mix tags and branches — here the calculation engine uses a feature branch while the other engines use release tags:
+
+```bash
+codcel \
+  -e ./specs/mortgage.xlsx \
+  -p mortgage-calculator \
+  -g ./generated \
+--table-path ./tables \
+  --table-type parquet \
+  --calculation-engine-branch feature/new-rounding \
+  --table-engine-tag release-0.1.5 \
+  --parquet-engine-tag release-0.1.5 \
+  --postgresql-engine-tag release-0.1.5
 ```
 
 ### With Circular References
@@ -132,8 +180,7 @@ codcel \
   -e ./specs/financial-model.xlsx \
   -p financial-model \
   -g ./generated \
-  --templates /opt/codcel/templates \
-  --table-path ./tables \
+--table-path ./tables \
   --enable-iterative-calculation \
   --maximum-iterations 200 \
   --maximum-change 0.0001
@@ -153,7 +200,6 @@ The CLI is well suited for automated pipelines. A typical CI/CD step:
       -e ./business_specs/calculations.xlsx \
       -p my-project \
       -g ./generated \
-      --templates ${{ env.CODCEL_TEMPLATES }} \
       --table-path ./tables \
       --table-type parquet
 ```

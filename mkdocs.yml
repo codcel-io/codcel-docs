@@ -82,6 +82,8 @@ nav:
       - Web Clients: output-targets/web-clients.md
       - Fullstack UI: output-targets/fullstack-ui.md
       - Integrations: output-targets/integrations.md
+      - Excel Python Interface: output-targets/excel-python-interface.md
+      - Excel Web Client Python Interface: output-targets/excel-web-client-python-interface.md
   - Tables & Data:
       - Tables: tables.md
       - Table Functions: table-functions.md

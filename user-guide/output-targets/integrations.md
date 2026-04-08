@@ -135,3 +135,5 @@ Both JNI and FFI libraries include `_with_language` function variants that accep
 | MCP Server | Rust Calculation Library |
 | JNI | Rust Calculation Library |
 | FFI | Rust Calculation Library |
+| Excel Python Interface | FFI Library, Python Calculation Library |
+| Excel Web Client Python Interface | Python Web Client, running REST Server |

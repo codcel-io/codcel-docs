@@ -34,6 +34,7 @@ These codes appear when generating code for a specific output target:
 | SW | Swift |
 | CLI | Command Line |
 | DX | Dioxus Fullstack |
+| EWX | Excel Web Client Python Interface |
 | FFI | FFI Library |
 | JNI | JNI Library |
 | MCP | MCP Server |
@@ -50,6 +51,7 @@ These codes appear when generating code for a specific output target:
 | WCP | Python Web Client |
 | WCR | Rust Web Client |
 | WCT | TypeScript Web Client |
+| XLW | Excel Python Interface |
 
 ---
 
@@ -144,6 +146,26 @@ These codes appear when generating code for a specific output target:
 **Message:** Sheet '{name}' appears to contain table data but does not use the T_ prefix.
 
 **Fix:** Table sheets must be named with a `T_` prefix (e.g., `T_Addresses`). Rename the sheet.
+
+---
+
+### L28 - Cannot open Parquet input file
+
+**Type:** Error
+
+**Message:** Cannot open Parquet input file: {path}
+
+**Fix:** Check that the Parquet file exists and is readable. Ensure the file is a valid Parquet file.
+
+---
+
+### L29 - Parquet column count mismatch
+
+**Type:** Warning
+
+**Message:** Parquet file '{path}' has {n} columns but Excel sheet '{sheet}' has {m} header columns.
+
+**Fix:** Ensure the Parquet file has the same number of data columns as the Excel sheet's header row. Columns are mapped by position, not by name.
 
 ---
 

@@ -96,6 +96,8 @@ Use this index as a guide to every major topic.
 - [Web Clients](./output-targets/web-clients.md)
 - [Fullstack UI](./output-targets/fullstack-ui.md)
 - [Integrations](./output-targets/integrations.md) (OpenAPI, CLI, MCP, JNI, FFI)
+- [Excel Python Interface](./output-targets/excel-python-interface.md) (xlwings, .xlsm workbooks)
+- [Excel Web Client Python Interface](./output-targets/excel-web-client-python-interface.md) (xlwings, .xlsm workbooks via REST API)
 
 ### Tables & Data
 - [Tables](./tables.md)
