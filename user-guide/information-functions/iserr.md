@@ -146,13 +146,14 @@ Returns the number of cells in A1:A10 that contain errors other than #N/A
 
 ## Related Functions:
 
-- **ISERROR**: Returns TRUE if the value is any error, including `#N/A`.
-- **ISNA**: Returns TRUE only if the value is the `#N/A` error.
-- **IFERROR**: Returns a specified value if a formula evaluates to any error; otherwise returns the formula result.
-- **IFNA**: Returns a specified value if a formula evaluates to `#N/A`; otherwise returns the formula result.
-- **ISBLANK**: Returns TRUE if the cell is empty.
+- **[ISERROR](./iserror.md)**: Returns TRUE if the value is any error, including `#N/A`.
+- **[ISNA](./isna.md)**: Returns TRUE only if the value is the `#N/A` error.
+- **[ERROR.TYPE](./error_type.md)**: Returns a numeric code identifying which specific error a value is (1–7).
+- **[IFERROR](../conditional-functions/if_error.md)**: Returns a specified value if a formula evaluates to any error; otherwise returns the formula result.
+- **[IFNA](../logical-functions/ifna.md)**: Returns a specified value if a formula evaluates to `#N/A`; otherwise returns the formula result.
+- **[ISBLANK](./isblank.md)**: Returns TRUE if the cell is empty.
 - **ISNUMBER**: Returns TRUE if the value is a number.
 - **ISTEXT**: Returns TRUE if the value is text.
-- **TYPE**: Returns a numeric code indicating the data type of a value.
+- **[TYPE](./type.md)**: Returns a numeric code indicating the data type of a value.
 
 > **Tip:** Use `ISERR` when you need to handle formula errors separately from lookup failures. A common pattern is to use `ISERR` for catching calculation errors (like `#DIV/0!` or `#VALUE!`) while using `ISNA` or `IFNA` to handle missing data from `VLOOKUP` or `XLOOKUP`. If you don't need to distinguish between error types, `IFERROR` is a simpler alternative that catches everything.

@@ -99,6 +99,7 @@ nav:
       - Statistical Functions: statistical-functions.md
       - Text Functions: text-functions.md
       - Conditional Functions: conditional-functions.md
+      - Database Functions: database-functions.md
       - Engineering Functions: engineering-functions.md
       - Financial Functions: financial-functions.md
       - Logical Functions: logical-functions.md

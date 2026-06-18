@@ -330,6 +330,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [DATEVALUE](date-time-functions/date-value.md)
   Converts a date in text format to a serial number representing a date. Helps turn text dates into proper dates.
 
+- [DAVERAGE](database-functions/d_average.md)
+  Returns the arithmetic mean of values in a database column for rows matching the supplied criteria range. Empty match returns 0.
+
 - [DAY](date-time-functions/day.md)
   Returns the day of the month from a date (1–31).
 
@@ -344,6 +347,12 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 
 - [DBCS](text-functions/dbcs.md)
   Converts half-width (single-byte) characters in a text string to full-width (double-byte) characters. Inverse of the `ASC` function, used for East Asian language text processing.
+
+- [DCOUNT](database-functions/d_count.md)
+  Counts the numeric cells in a database column for rows matching the supplied criteria range. Text and empty cells are excluded.
+
+- [DCOUNTA](database-functions/d_count_a.md)
+  Counts the non-empty cells (any type) in a database column for rows matching the supplied criteria range.
 
 - [DDB](financial-functions/ddb.md)
   Returns the depreciation of an asset for a specified period using the double-declining balance method or a custom factor. Models faster early-life depreciation.
@@ -369,11 +378,20 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [DEVSQ](statistical-functions/devsq.md)
   The `DEVSQ` function in Excel calculates the **sum of the squared deviations** of data points from their sample mean.
 
+- [DGET](database-functions/d_get.md)
+  Returns the single value at the unique matching row in a database column. Returns `#NUM!` for zero matches, `#VALUE!` for more than one.
+
 - [DISC](financial-functions/disc.md)
   Returns the discount rate of a security, given settlement and maturity dates, price, and redemption value. Useful for discount yield calculations.
 
 - [DIVIDE](mathematical-functions/divide.md)
   In Excel, the `/` symbol is used as an arithmetic operator to divide one number by another.
+
+- [DMAX](database-functions/d_max.md)
+  Returns the maximum numeric value in a database column for rows matching the supplied criteria range. Empty match returns 0.
+
+- [DMIN](database-functions/d_min.md)
+  Returns the minimum numeric value in a database column for rows matching the supplied criteria range. Empty match returns 0.
 
 - [DROP](information-functions/drop.md)
   Excludes a specified number of rows or columns from the beginning or end of an array. Positive values drop from the start; negative values drop from the end.
@@ -387,8 +405,26 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [DOLLARFR](financial-functions/dollar_fr.md)
   Converts a dollar price expressed as a decimal to a fraction. Useful for formatting and converting bond prices to fractional notation.
 
+- [DPRODUCT](database-functions/d_product.md)
+  Multiplies the numeric values in a database column for rows matching the supplied criteria range. Empty match returns 0.
+
+- [DSTDEV](database-functions/d_stdev.md)
+  Returns the sample standard deviation (n−1 divisor) of the numeric values in a database column for rows matching the criteria. Fewer than 2 values returns `#DIV/0!`.
+
+- [DSTDEVP](database-functions/d_stdev_p.md)
+  Returns the population standard deviation (n divisor) of the numeric values in a database column for rows matching the criteria. Zero values returns `#NUM!`.
+
+- [DSUM](database-functions/d_sum.md)
+  Sums the values in a database column for rows matching the supplied criteria range. Empty match returns 0.
+
 - [DURATION](financial-functions/duration.md)
   Returns the Macauley duration of a security with periodic interest payments. Measures sensitivity of price to interest rate changes.
+
+- [DVAR](database-functions/d_var.md)
+  Returns the sample variance (n−1 divisor) of the numeric values in a database column for rows matching the criteria. Fewer than 2 values returns `#DIV/0!`.
+
+- [DVARP](database-functions/d_var_p.md)
+  Returns the population variance (n divisor) of the numeric values in a database column for rows matching the criteria. Zero values returns `#NUM!`.
 
 - [EDATE](date-time-functions/e-date.md)
   Returns a date a specified number of months before or after a start date.
@@ -410,6 +446,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 
 - [ERFC.PRECISE](engineering-functions/erfc_precise.md)
   Returns the complementary error function with improved precision. Useful for high‑accuracy probability and error calculations.
+
+- [ERROR.TYPE](information-functions/error_type.md)
+  Returns a numeric code (1–7) identifying which Excel error a value represents. Pair with `CHOOSE` to render custom messages per error type.
 
 - [EVEN](mathematical-functions/even.md)
   Rounds a number up to the nearest even integer.
@@ -698,6 +737,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 
 - [ISERROR](information-functions/iserror.md)
   Returns TRUE if a value is any error, including #N/A, #VALUE!, #REF!, #DIV/0!, #NUM!, #NAME?, and #NULL!. Useful for universal error handling in formulas.
+
+- [ISNA](information-functions/isna.md)
+  Returns TRUE only if a value is the #N/A error; otherwise FALSE. Useful for detecting failed lookups while ignoring other error types.
 
 - [ISNUMBER](mathematical-functions/is_number.md)
   Returns TRUE if a value is numeric; otherwise FALSE.

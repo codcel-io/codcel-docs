@@ -128,6 +128,18 @@ If A1 contains `100`:
 Returns "Text value" if A1 contains text, otherwise "Not text"
 ```
 
+### 9. Distinguishing Error Types (TYPE vs ERROR.TYPE):
+
+`TYPE` reports only that a value is an error (returns `16`), without identifying which one. To pinpoint the specific error, use `ERROR.TYPE`:
+```excel
+=IF(TYPE(A1)=16, "Error code " & ERROR.TYPE(A1), "Not an error")
+```
+
+**Result:**
+```
+"Error code 2" if A1 contains #DIV/0!, "Error code 7" for #N/A, "Not an error" for any non-error value.
+```
+
 ## Notes:
 
 - `TYPE` does not distinguish between different kinds of numbers (integers, decimals, dates, times) — all return `1`.
@@ -149,8 +161,9 @@ Returns "Text value" if A1 contains text, otherwise "Not text"
 - **ISNUMBER**: Returns TRUE if the value is a number.
 - **ISTEXT**: Returns TRUE if the value is text.
 - **ISLOGICAL**: Returns TRUE if the value is a logical value.
-- **ISERROR**: Returns TRUE if the value is any error.
-- **ISNA**: Returns TRUE if the value is the #N/A error.
+- **[ISERROR](./iserror.md)**: Returns TRUE if the value is any error.
+- **[ISNA](./isna.md)**: Returns TRUE if the value is the #N/A error.
+- **[ERROR.TYPE](./error_type.md)**: Returns the specific error code (1–7) — narrower than `TYPE`, which only reports `16` for any error.
 - **N**: Converts values to numbers.
 
 > **Tip:** Use `TYPE` when you need a single formula to handle multiple data types. Instead of nesting `ISNUMBER`, `ISTEXT`, and `ISERROR` checks, a single `TYPE` call can drive a `SWITCH` or nested `IF` to branch on the data type efficiently.

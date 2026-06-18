@@ -42,6 +42,21 @@ Excludes a specified number of rows or columns from the beginning or end of an a
     - `=DROP(A1:D10, 1, 1)` returns rows 2-10 and columns B-D (removes first row and column)
     - `=DROP(SORT(A1:B10, 2, -1), 3)` sorts and removes the top 3 rows
 
+## E
+
+### [ERROR.TYPE](./information-functions/error_type.md)
+
+Returns a numeric code (1–7) identifying which specific Excel error a value represents.
+
+- **Purpose:** Maps each Excel error token to a number so that formulas can react differently to each error type, typically by feeding the code into `CHOOSE` to pick a tailored message.
+- **Formula:** `ERROR.TYPE(error_val)`
+    - `error_val` is the value or expression whose error type you want to identify; if it is not an error, `ERROR.TYPE` returns `#N/A`.
+- **Example Usage:**
+    - `=ERROR.TYPE(NA())` returns `7` (the code for `#N/A`)
+    - `=ERROR.TYPE(1/0)` returns `2` (the code for `#DIV/0!`)
+    - `=ERROR.TYPE(100)` returns `#N/A` (input is not an error)
+    - `=IF(ISERROR(A1), CHOOSE(ERROR.TYPE(A1), "Empty intersection", "Divide by zero", "Wrong type", "Bad reference", "Unknown name", "Bad number", "Not available"), A1)` shows a custom message per error type
+
 ## I
 
 ### [ISBLANK](./information-functions/isblank.md)
@@ -82,6 +97,19 @@ Checks whether a value is any error, returning TRUE for all error types includin
     - `=ISERROR(NA())` returns `TRUE` (unlike ISERR, ISERROR detects #N/A)
     - `=IF(ISERROR(A1/B1), "Error", A1/B1)` returns a fallback message for any error
     - `=SUMPRODUCT(--ISERROR(A1:A10))` counts cells containing any error
+
+### [ISNA](./information-functions/isna.md)
+
+Checks whether a value is the `#N/A` error specifically, returning TRUE only for `#N/A` and FALSE for all other errors and non-error values.
+
+- **Purpose:** Detects the `#N/A` error in isolation so that lookup failures can be handled separately from other formula errors.
+- **Formula:** `ISNA(value)`
+    - `value` is the value or expression you want to test for `#N/A`.
+- **Example Usage:**
+    - `=ISNA(NA())` returns `TRUE`
+    - `=ISNA(1/0)` returns `FALSE` (`#DIV/0!` is not `#N/A`)
+    - `=IF(ISNA(VLOOKUP(A1, D:E, 2, FALSE)), "Not found", VLOOKUP(A1, D:E, 2, FALSE))` substitutes a message only when the lookup misses
+    - `=SUMPRODUCT(--ISNA(A1:A10))` counts cells in `A1:A10` that contain `#N/A`
 
 ### [ISOMITTED](./information-functions/isomitted.md)
 

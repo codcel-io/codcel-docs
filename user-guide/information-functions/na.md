@@ -142,10 +142,11 @@ Returns #N/A instead of #DIV/0! if A1 is zero
 
 ## Related Functions:
 
-- **ISNA**: Tests whether a value is the `#N/A` error.
-- **IFNA**: Returns a specified value if a formula returns `#N/A`, otherwise returns the formula result.
-- **IFERROR**: Returns a specified value if a formula returns any error.
-- **ISERROR**: Tests whether a value is any error.
+- **[ISNA](./isna.md)**: Tests whether a value is the `#N/A` error.
+- **[ERROR.TYPE](./error_type.md)**: Returns `7` for `#N/A` and a different code for each of the other six Excel errors.
+- **[IFNA](../logical-functions/ifna.md)**: Returns a specified value if a formula returns `#N/A`, otherwise returns the formula result.
+- **[IFERROR](../conditional-functions/if_error.md)**: Returns a specified value if a formula returns any error.
+- **[ISERROR](./iserror.md)**: Tests whether a value is any error.
 - **N**: Converts values to numbers (returns 0 for text and errors).
 
 > **Tip:** Use `NA()` instead of leaving cells blank when data is genuinely missing. This makes your spreadsheets more reliable by ensuring that missing data is handled explicitly rather than being silently treated as zero in calculations.

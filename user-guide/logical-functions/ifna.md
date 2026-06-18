@@ -93,14 +93,17 @@ This selective behavior is the key difference between `IFNA` and `IFERROR`. Wher
 
 ### Related Functions:
 
-- **IFERROR**: Returns a specified value if any error occurs; otherwise returns the formula result.
+- **[IFERROR](../conditional-functions/if_error.md)**: Returns a specified value if any error occurs; otherwise returns the formula result.
   Example: `=IFERROR(A1/B1, 0)` returns `0` if the division causes any error.
 
-- **ISNA**: Returns `TRUE` if a value is the `#N/A` error; otherwise returns `FALSE`.
+- **[ISNA](../information-functions/isna.md)**: Returns `TRUE` if a value is the `#N/A` error; otherwise returns `FALSE`.
   Example: `=ISNA(VLOOKUP("X", A1:B5, 2, FALSE))` returns `TRUE` if the lookup fails with `#N/A`.
 
-- **ISERROR**: Returns `TRUE` if a value is any error type; otherwise returns `FALSE`.
+- **[ISERROR](../information-functions/iserror.md)**: Returns `TRUE` if a value is any error type; otherwise returns `FALSE`.
   Example: `=ISERROR(A1/0)` returns `TRUE` because division by zero produces `#DIV/0!`.
+
+- **[ERROR.TYPE](../information-functions/error_type.md)**: Returns a numeric code identifying which specific error a value is (1–7).
+  Example: `=ERROR.TYPE(NA())` returns `7` (the code for `#N/A`).
 
 - **IF**: Evaluates a condition and returns one value for TRUE and another for FALSE.
   Example: `=IF(A1 > 100, "High", "Low")` returns `"High"` or `"Low"` based on the value.

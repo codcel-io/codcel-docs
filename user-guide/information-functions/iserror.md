@@ -145,13 +145,14 @@ Returns the number of cells in A1:A10 that contain any error
 
 ## Related Functions:
 
-- **ISERR**: Returns TRUE if the value is any error **except** `#N/A`.
-- **ISNA**: Returns TRUE only if the value is the `#N/A` error.
-- **IFERROR**: Returns a specified value if a formula evaluates to any error; otherwise returns the formula result.
-- **IFNA**: Returns a specified value if a formula evaluates to `#N/A`; otherwise returns the formula result.
-- **ISBLANK**: Returns TRUE if the cell is empty.
+- **[ISERR](./iserr.md)**: Returns TRUE if the value is any error **except** `#N/A`.
+- **[ISNA](./isna.md)**: Returns TRUE only if the value is the `#N/A` error.
+- **[ERROR.TYPE](./error_type.md)**: Returns a numeric code identifying which specific error a value is (1–7).
+- **[IFERROR](../conditional-functions/if_error.md)**: Returns a specified value if a formula evaluates to any error; otherwise returns the formula result.
+- **[IFNA](../logical-functions/ifna.md)**: Returns a specified value if a formula evaluates to `#N/A`; otherwise returns the formula result.
+- **[ISBLANK](./isblank.md)**: Returns TRUE if the cell is empty.
 - **ISNUMBER**: Returns TRUE if the value is a number.
 - **ISTEXT**: Returns TRUE if the value is text.
-- **TYPE**: Returns a numeric code indicating the data type of a value.
+- **[TYPE](./type.md)**: Returns a numeric code indicating the data type of a value.
 
 > **Tip:** In modern Excel, `IFERROR` is generally preferred over `IF(ISERROR(...), ...)` because it is more concise and more efficient — it evaluates the expression only once. However, `ISERROR` remains useful when you need to use the error check result in more complex logical expressions, or when combining with other IS functions to distinguish between different error types.
