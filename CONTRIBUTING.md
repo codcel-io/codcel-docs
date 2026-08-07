@@ -136,13 +136,33 @@ Minimal reproducible examples help us diagnose issues faster.
 
 # Licensing
 
-By submitting a contribution to this repository, you agree that your contribution will be licensed under the same terms as this project.
+This documentation is licensed under the Creative Commons Attribution 4.0 International
+License ([LICENSE](LICENSE)). There are no field-of-use restrictions and no commercial
+carve-outs.
 
-See:
-    [LICENSING.md](./LICENSING.md)
+Unless you explicitly state otherwise, any contribution you intentionally submit for
+inclusion in this repository shall be licensed as above, without any additional terms or
+conditions.
 
+### Developer Certificate of Origin
 
-for details.
+Contributions must be signed off under the [Developer Certificate of Origin](https://developercertificate.org). Signing off certifies that you wrote the
+contribution, or otherwise have the right to submit it under the license above.
+
+Add the sign-off by committing with `-s`:
+
+```bash
+git commit -s -m "Clarify YEARFRAC basis 4 example"
+```
+
+This appends a trailer to your commit message:
+
+```
+Signed-off-by: Your Name <your.email@example.com>
+```
+
+The name and email must match those on the commit. Pull requests whose commits are not
+signed off cannot be merged.
 
 ---
 

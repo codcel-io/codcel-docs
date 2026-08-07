@@ -1,8 +1,9 @@
 <!--
-Copyright (c) 2026 Codcel
+SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
+SPDX-License-Identifier: CC-BY-4.0
 
-Licensed under CC BY 4.0 or the Codcel Documentation License.
-See LICENSING.md for details.
+This file is part of the Codcel documentation (https://codcel.io).
+See LICENSE in the project root.
 -->
 
 ## TDIST Function

@@ -9,6 +9,8 @@
 
 # Codcel Documentation
 
+[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-blue.svg)](#licensing)
+
 Open-source documentation for [Codcel](https://codcel.io) — written in Markdown, version-controlled, and community-improvable.
 
 ## Overview
@@ -54,9 +56,21 @@ This documentation is one of several open-source components that power Codcel. L
 
 ## Licensing
 
-This documentation is dual-licensed:
+Licensed under the Creative Commons Attribution 4.0 International License
+([LICENSE](LICENSE) or <https://creativecommons.org/licenses/by/4.0/>).
 
-- **[Creative Commons Attribution 4.0 (CC BY 4.0)](LICENSE-CC-BY)** — for general use
-- **[Codcel Documentation License](LICENSE-CODCEL-DOCS)** — applies if this documentation is used as part of an Automated Code Generation System or competing spreadsheet-to-code platform
+You may share and adapt this documentation for any purpose, including commercially,
+provided you give appropriate credit. There are no field-of-use restrictions and no
+commercial carve-outs.
 
-See [LICENSING.md](LICENSING.md) for details.
+This documentation describes [Codcel](https://codcel.io), a commercial product. It is
+published under permissive terms so that anyone — including customers whose generated
+code depends on the behaviour described here — can read, audit and verify exactly what
+the product does. Contributions are welcome, but support is best effort.
+
+### Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for
+inclusion in this repository by you shall be licensed as above, without any additional
+terms or conditions. Contributions require a Developer Certificate of Origin sign-off —
+see [CONTRIBUTING.md](CONTRIBUTING.md).

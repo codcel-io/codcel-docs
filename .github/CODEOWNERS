@@ -2,9 +2,7 @@
 * @codcel-io
 
 # Legal / governance files
-/LICENSE-CC-BY @codcel-io
-/LICENSE-CODCEL-DOCS @codcel-io
-/LICENSING.md @codcel-io
+/LICENSE @codcel-io
 /CONTRIBUTING.md @codcel-io
 /README.md @codcel-io
 
