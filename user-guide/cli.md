@@ -91,11 +91,30 @@ Parquet files are self-describing, so no header or delimiter settings are needed
 
 ### Engine Versions
 
-Control which versions of the Codcel engine dependencies are used in the generated code. For each engine you can specify either a git **tag** (for releases) or a git **branch** (for development/PR testing). If both tag and branch are specified for the same engine, the tag takes priority. If neither is specified, the generated code defaults to `branch = "main"`.
+Generated projects resolve the four Codcel engines from **crates.io**. You do not need to pass anything: with no flags, the generated `Cargo.toml` pins the version of each engine that ships with your transpiler, as an exact requirement:
+
+```toml
+codcel-calculation-engine = { version = "=0.1.9" }
+```
+
+The pin is exact by design. A generated calculation must keep producing identical numbers, so `cargo update` must not be able to move an engine underneath it. To upgrade, regenerate the project with a newer transpiler, or pass an explicit version.
 
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `--calculation-engine-tag` | *(empty)* | Git tag for codcel-calculation-engine (e.g. `release-0.1.5`) |
+| `--calculation-engine-version` | *(built-in)* | crates.io version requirement for codcel-calculation-engine (e.g. `=0.1.9`, `0.1`, `^0.2`) |
+| `--table-engine-version` | *(built-in)* | crates.io version requirement for codcel-table-engine |
+| `--parquet-engine-version` | *(built-in)* | crates.io version requirement for codcel-parquet-engine |
+| `--postgresql-engine-version` | *(built-in)* | crates.io version requirement for codcel-postgresql-engine |
+
+The version string is passed through verbatim, so any Cargo requirement syntax works.
+
+#### Git overrides
+
+For development and PR testing you can point an engine at a git **tag** or **branch** instead. These are an escape hatch for testing generated code against unreleased engine work — released projects should use crates.io versions.
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--calculation-engine-tag` | *(empty)* | Git tag for codcel-calculation-engine (e.g. `release-0.1.9`) |
 | `--calculation-engine-branch` | *(empty)* | Git branch for codcel-calculation-engine (e.g. `feature/my-branch`) |
 | `--table-engine-tag` | *(empty)* | Git tag for codcel-table-engine |
 | `--table-engine-branch` | *(empty)* | Git branch for codcel-table-engine |
@@ -103,6 +122,13 @@ Control which versions of the Codcel engine dependencies are used in the generat
 | `--parquet-engine-branch` | *(empty)* | Git branch for codcel-parquet-engine |
 | `--postgresql-engine-tag` | *(empty)* | Git tag for codcel-postgresql-engine |
 | `--postgresql-engine-branch` | *(empty)* | Git branch for codcel-postgresql-engine |
+
+Each engine resolves independently, using the first of these that is set:
+
+1. `--<engine>-engine-tag` — git dependency at that tag
+2. `--<engine>-engine-branch` — git dependency on that branch
+3. `--<engine>-engine-version` — crates.io dependency at that version
+4. nothing — crates.io dependency at the transpiler's built-in version
 
 ---
 
@@ -157,9 +183,7 @@ codcel \
   --parquet-files "T_Measurements.parquet,T_Measurements_part2.parquet"
 ```
 
-### Testing a Feature Branch
-
-Use `--*-engine-branch` to point generated code at a development branch. You can mix tags and branches — here the calculation engine uses a feature branch while the other engines use release tags:
+### Pinning a Specific Published Version
 
 ```bash
 codcel \
@@ -168,10 +192,24 @@ codcel \
   -g ./generated \
 --table-path ./tables \
   --table-type parquet \
-  --calculation-engine-branch feature/new-rounding \
-  --table-engine-tag release-0.1.5 \
-  --parquet-engine-tag release-0.1.5 \
-  --postgresql-engine-tag release-0.1.5
+  --calculation-engine-version "=0.1.8" \
+  --table-engine-version "=0.1.8" \
+  --parquet-engine-version "=0.1.8" \
+  --postgresql-engine-version "=0.1.8"
+```
+
+### Testing a Feature Branch
+
+Use `--*-engine-branch` to point one engine at a development branch. Engines resolve independently, so here the calculation engine comes from git while the other three stay on crates.io:
+
+```bash
+codcel \
+  -e ./specs/mortgage.xlsx \
+  -p mortgage-calculator \
+  -g ./generated \
+--table-path ./tables \
+  --table-type parquet \
+  --calculation-engine-branch feature/new-rounding
 ```
 
 ### With Circular References
