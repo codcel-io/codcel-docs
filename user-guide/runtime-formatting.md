@@ -213,12 +213,20 @@ Unrecognised language codes fall back to the default formatting from code genera
 
 ## WASM (WebAssembly)
 
-In WebAssembly targets, OS locale detection is not available (the browser sandbox does not expose system locale information). The generated WASM code uses the formatting defaults from code generation.
+Three behaviours differ inside a WebAssembly sandbox and are worth knowing before you rely on them:
 
-To use locale-specific formatting in WASM:
-
-- Use the `_with_format` API variant to pass a `ValueFormat` directly from JavaScript
-- Set `CODCEL_*` environment variables before building (they are baked in at compile time for WASM)
+- **Locale detection is unavailable, and `CODCEL_*` overrides are ignored.** The sandbox exposes
+  no system locale, and environment variables cannot be read at runtime, so the `CODCEL_*`
+  variables listed above have no effect on a WASM build. `ValueFormat` falls back to the values
+  supplied by the caller. Use the `_with_format` API variant to pass a `ValueFormat` directly from
+  JavaScript if you need particular separators or a currency symbol; otherwise the defaults baked
+  in at code generation apply.
+- **`NOW()` and `TODAY()` require a JavaScript host.** They resolve the current time through
+  `js_sys::Date`. Browser and Node hosts via `wasm-bindgen` satisfy this; a bare runtime such as
+  Wasmtime does not.
+- **`RAND()` and `RANDBETWEEN()` are deterministic.** There is no entropy source in the sandbox,
+  so every instance produces the same sequence. This matters for any simulation or Monte Carlo
+  work.
 
 For browser-based applications, the **Fullstack UI** target is recommended -- it runs calculations on the server where full locale detection is available, and the browser's language is forwarded automatically via the `Accept-Language` header.
 

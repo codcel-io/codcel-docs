@@ -259,6 +259,16 @@ use_codcel_excel_web_client_python_xlwings = false
 
 Changes made through the Settings view and Generate Project view are written to this file automatically when you click Save or Generate.
 
+### The `codcel-io.toml` Sidecar
+
+Input and output selections are **not** stored in `codcel.toml`. They live in a separate
+`codcel-io.toml` file alongside it, written by the desktop app's **Save selections** button or by
+the CLI's `--detect-io` flag, and read automatically at generation time.
+
+It records, per input or output, whether it is included, its label, and (for inputs) whether it is
+Required, Default or Extra -- letting you adjust what the generated code exposes without editing
+the spreadsheet. For the full schema and workflow, see [Inputs & Outputs](./inputs-outputs.md).
+
 ---
 
 ## Runtime Formatting

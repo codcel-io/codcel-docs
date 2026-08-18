@@ -68,6 +68,7 @@ The sidebar contains the following items:
 - **Settings** -- configure formatting and calculation options
 
 **Visible after importing Excel files:**
+- **Inputs & Outputs** -- review, rename and auto-detect the inputs and outputs of your workbook
 - **Generate Project** -- select output targets and generate code
 
 **Visible after generating code** (one entry per enabled output type):
@@ -127,6 +128,45 @@ When you import a file:
 You can import multiple files. After importing, you can view the list of imported files and open the `business_specs/` folder in your system's file explorer.
 
 For guidance on preparing your Excel files before import, see the [Excel Guidelines](./codcel-excel-guidelines.md).
+
+---
+
+## Inputs & Outputs
+
+Once a spreadsheet has been imported, an **Inputs & Outputs** item appears in the sidebar. It
+shows a single list of everything the generated code will expose, so you can adjust it without
+editing the spreadsheet.
+
+The table opens showing only the inputs and outputs your workbook declares with `*I*` and `*O*`
+annotations, each badged **Marker** in the Source column. Auto-detection does not run on its own.
+
+| Column | What it shows |
+|--------|---------------|
+| **Include** | Tick or untick to include the entry in the generated code |
+| **Source** | `Marker` (from the spreadsheet) or `Detected` (a suggestion) |
+| **Type** | `Input` or `Output` |
+| **Cell** | The sheet and cell reference, as `Sheet1!B4` |
+| **Kind** | The cell's data kind: `Number`, `Formula`, `String`, `Boolean`, `DateTime` or `Time` |
+| **Option** | Inputs only: `Required`, `Default` or `Extra` |
+| **Label** | Editable name for the generated field |
+
+Three buttons control the list:
+
+- **Auto-detect** -- appends suggestions from cells you have *not* annotated, badged `Detected`.
+  Your existing edits are kept, and a suggestion can never take over an annotated cell.
+- **Reload from spreadsheet** -- re-reads the workbook after you change the `.xlsx`, preserving
+  your unsaved edits.
+- **Save selections** -- writes `codcel-io.toml` into the project folder. Reopening the view
+  restores everything you saved, including detected rows you accepted.
+
+Generation picks up `codcel-io.toml` from the project folder automatically, so there is nothing
+further to configure in the Generate Project view.
+
+The workbook is read off the user-interface thread, so the window stays responsive on large
+workbooks.
+
+For the file format, the detection rules and the equivalent CLI flags, see
+[Inputs & Outputs](./inputs-outputs.md).
 
 ---
 
@@ -231,6 +271,7 @@ After creating a project and generating code, your project directory will contai
 ```
 my-project/
 ├── codcel.toml              # Project configuration
+├── codcel-io.toml           # Saved input/output selections (created by Save selections)
 ├── business_specs/          # Imported Excel files
 │   └── spreadsheet.xlsx
 ├── src/                     # Generated Rust source code
@@ -250,4 +291,5 @@ The `codcel.toml` file contains all project settings, file references, and gener
 - [Preparing Excel Files](./codcel-excel-guidelines.md) -- guidelines for cleaning and annotating your spreadsheets
 - [Excel to Code Walkthrough](./excel-to-code.md) -- step-by-step guide from spreadsheet to generated project
 - [Settings Reference](./settings.md) -- detailed explanation of all configuration options
+- [Inputs & Outputs](./inputs-outputs.md) -- reviewing, renaming and auto-detecting inputs and outputs
 - [UI Configuration](./ui-configuration.md) -- configuring generated UI elements from within Excel

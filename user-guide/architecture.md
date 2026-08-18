@@ -50,7 +50,21 @@ Codcel consists of several components that work together:
 
 ## Open-Source Components
 
-Codcel provides three open-source libraries written in Rust:
+Codcel provides four open-source engine crates written in Rust, plus this documentation. The
+engine crates are licensed **MIT OR Apache-2.0** -- no field-of-use restrictions, no commercial
+carve-outs -- and are published on crates.io, so a generated Rust project resolves them as
+ordinary dependencies without needing git access:
+
+| Crate | Role | crates.io |
+|-------|------|-----------|
+| `codcel-calculation-engine` | Excel-compatible formula evaluation | [link](https://crates.io/crates/codcel-calculation-engine) |
+| `codcel-table-engine` | The `CodcelTable` trait -- a backend-agnostic table interface | [link](https://crates.io/crates/codcel-table-engine) |
+| `codcel-parquet-engine` | Read-only `CodcelTable` implementation over Parquet | [link](https://crates.io/crates/codcel-parquet-engine) |
+| `codcel-postgresql-engine` | Full CRUD `CodcelTable` implementation over PostgreSQL | [link](https://crates.io/crates/codcel-postgresql-engine) |
+
+Generated `Cargo.toml` files pin these engines to an **exact** version, so `cargo update` cannot
+move a generated calculation underneath you. See
+[Engine Versions](./cli.md#engine-versions) for how to choose a different version.
 
 ### Codcel Calculation Engine
 
@@ -75,9 +89,19 @@ The trait defines:
 - **Access functions:** INDEX, FILTER, SELECT_ALL
 - **CRUD functions:** ADD_ROW, READ_ROW, UPDATE_ROW, DELETE_ROW
 
+### Codcel Parquet Engine
+
+The read-only `CodcelTable` implementation used for [Massive Tables](./massive-tables.md). See
+[Parquet Engine](#parquet-engine) below.
+
+### Codcel PostgreSQL Engine
+
+The full-CRUD `CodcelTable` implementation used for [CRUD Tables](./crud-tables.md). See
+[PostgreSQL Engine](#postgresql-engine) below.
+
 ### Codcel Documentation
 
-This user guide is open source and community-improvable.
+This user guide is open source and community-improvable, licensed CC BY 4.0.
 
 Links to these repositories are available on the [Codcel website](https://codcel.io).
 
@@ -93,6 +117,13 @@ Used for [Massive Tables](./massive-tables.md) (billions of rows, read-only).
 - Uses Apache DataFusion to execute SQL queries against Parquet files
 - Includes query caching (5-minute TTL) and request coalescing
 - Supports sharded files (data split across multiple Parquet files)
+
+!!! note
+    Correct assembly of results spanning multiple Arrow record batches -- which happens with
+    sharded tables and with aggregate or `DISTINCT` queries -- requires
+    `codcel-parquet-engine` **0.1.9 or later**. Earlier versions could return rows with too many
+    or too few columns in those cases. Regenerate an older project, or raise the engine version,
+    to pick up the fix.
 - Read-only -- CRUD operations are not available
 
 ### PostgreSQL Engine

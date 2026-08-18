@@ -34,6 +34,12 @@ A WebAssembly version of the calculation engine for use in web browsers.
 - **Output:** JavaScript/TypeScript bindings in `pkg/`
 - **Use case:** Run calculations directly in the browser without a server
 
+!!! note
+    Three behaviours differ in a WASM sandbox: locale detection and `CODCEL_*` environment
+    overrides are unavailable, `NOW()` and `TODAY()` require a JavaScript host, and `RAND()` and
+    `RANDBETWEEN()` are deterministic. See
+    [Runtime Formatting](../runtime-formatting.md#wasm-webassembly).
+
 ---
 
 ## Java Calculation Library

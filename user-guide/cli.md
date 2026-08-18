@@ -88,6 +88,24 @@ Parquet files are self-describing, so no header or delimiter settings are needed
 | Argument | Default | Description |
 |----------|---------|-------------|
 | `--large-array-threshold` | `100` | Row count above which array constants are externalised to separate files (prevents slow compilation) |
+| `--templates` | *(empty)* | Path to the template directory. Only required when Codcel is built without the `embedded-templates` feature |
+
+### Inputs & Outputs
+
+Codcel generates inputs and outputs from the `*I*` and `*O*` annotations in your workbook. These
+flags add a review step on top of that: they list what the generated code will expose, let Codcel
+suggest inputs and outputs from unmarked cells, and save your choices to a `codcel-io.toml`
+sidecar file.
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--detect-io` | `false` | List the workbook's annotations plus detected candidates, write them to the config file, then exit without transpiling |
+| `--detect-io-interactive` | `false` | The same list, reviewed in an interactive terminal checklist, then transpile in the same run |
+| `--io-config` | *(empty)* | Path to a `codcel-io.toml` to apply. Also chooses where `--detect-io` writes. Defaults to `codcel-io.toml` next to the Excel file |
+
+Passing none of these flags means no config file is read or written, so existing scripts behave
+exactly as before. See [Inputs & Outputs](./inputs-outputs.md) for the file format and the full
+workflow.
 
 ### Engine Versions
 
@@ -212,6 +230,35 @@ codcel \
   --calculation-engine-branch feature/new-rounding
 ```
 
+### Detecting Inputs and Outputs
+
+Write the detected inputs and outputs to a file, review it, then transpile with your selections
+applied:
+
+```bash
+# Detect and write the file, then exit
+codcel \
+  -e ./specs/mortgage.xlsx \
+  -p mortgage-calculator \
+  -g ./generated \
+--table-path ./tables \
+  --table-type parquet \
+  --detect-io \
+  --io-config ./codcel-io.toml
+
+# Edit ./codcel-io.toml, then generate with those selections
+codcel \
+  -e ./specs/mortgage.xlsx \
+  -p mortgage-calculator \
+  -g ./generated \
+--table-path ./tables \
+  --table-type parquet \
+  --io-config ./codcel-io.toml
+```
+
+Use `--detect-io-interactive` instead to review the list in a terminal checklist and transpile in
+a single run.
+
 ### With Circular References
 
 ```bash
@@ -273,10 +320,16 @@ The CLI arguments correspond to settings in `codcel.toml`. The desktop app reads
 | `--maximum-iterations` | `formatting.circular_max_iterations` |
 | `--maximum-change` | `formatting.circular_convergence_threshold` |
 
+Input and output selections are the exception: they are stored in a separate `codcel-io.toml`
+sidecar file rather than in `codcel.toml`. The CLI reads it via `--io-config`, and the desktop
+app reads it from the project folder automatically. See
+[Inputs & Outputs](./inputs-outputs.md).
+
 ---
 
 ## See Also
 
+- [Inputs & Outputs](./inputs-outputs.md) -- reviewing, renaming and auto-detecting inputs and outputs
 - [Settings Reference](./settings.md) -- full reference for all configuration options
 - [Runtime Formatting](./runtime-formatting.md) -- runtime locale detection and `CODCEL_*` environment variable overrides
 - [Desktop Application Guide](./desktop-app.md) -- using the graphical interface instead

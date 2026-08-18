@@ -71,6 +71,7 @@ nav:
       - Excel to Code: excel-to-code.md
       - Excel Guidelines: codcel-excel-guidelines.md
       - Annotations: annotations.md
+      - Inputs & Outputs: inputs-outputs.md
       - Settings: settings.md
       - Runtime Formatting: runtime-formatting.md
       - CLI: cli.md

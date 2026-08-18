@@ -52,6 +52,13 @@ All files whose name starts with the sheet name (without the `T_` prefix) follow
 !!! note
     If both Parquet and CSV files exist for the same table, the Parquet files take priority.
 
+!!! warning "Sharded tables require engine 0.1.9 or later"
+    Queries against a table split across multiple files return their results in several batches.
+    Before `codcel-parquet-engine` 0.1.9, those batches were assembled incorrectly, producing rows
+    with too many or too few columns. The same applied to aggregate and `DISTINCT` queries.
+    Regenerate an older project, or raise the engine version with
+    `--parquet-engine-version`, to pick up the fix.
+
 ### 2. Name the CSV File to Match Your Excel Sheet
 
 The data file name must match an Excel sheet name that uses the `T_` prefix. For example:

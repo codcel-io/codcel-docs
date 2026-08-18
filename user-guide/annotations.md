@@ -29,6 +29,11 @@ Annotations are special markers you place in Excel cells to tell Codcel which ce
 | `*U*` | `*U*ColumnName` (in table header) | Unique column constraint |
 | `*X*` | `*X*ColumnName` (in table header) | Optional column |
 
+!!! tip
+    Annotated inputs and outputs can be renamed, re-optioned or excluded from the generated code
+    **without editing the spreadsheet**, and Codcel can suggest inputs and outputs from cells you
+    have not annotated. See [Inputs & Outputs](./inputs-outputs.md).
+
 ---
 
 ## Input Annotations

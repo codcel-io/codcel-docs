@@ -13,8 +13,8 @@ Welcome to the official documentation for **Codcel** -- a platform that transfor
 Codcel reads your annotated Excel workbooks and generates:
 
 - **Source code** in languages such as **Rust, Python, Java, C#, Go, Swift, Kotlin, JavaScript/TypeScript**, and more
-- **Calculation engines** (Codcel Calculation Engine -- open source, Rust)
-- **Table engines** with CRUD functionality and high-performance columnar storage (Codcel Table Engine -- open source, Rust)
+- **Calculation engines** (Codcel Calculation Engine -- open source Rust, MIT OR Apache-2.0)
+- **Table engines** with CRUD functionality and high-performance columnar storage (Codcel Table Engine -- open source Rust, MIT OR Apache-2.0)
 - **REST APIs**, **UI components**, and **MCP servers**
 - Fully-structured, human-readable code your team owns
 
@@ -39,18 +39,25 @@ The desktop app runs entirely locally and is used to import spreadsheets, annota
 
 ## Open-Source Projects
 
-Codcel provides several open-source components written in Rust:
+Codcel provides several open-source components written in Rust. The four engine crates are
+licensed **MIT OR Apache-2.0** -- there are no field-of-use restrictions and no commercial
+carve-outs -- and are published on crates.io, so generated projects build without needing access
+to a git repository.
 
 - **[Codcel Calculation Engine](https://github.com/codcel-io/codcel-calculation-engine)**
+  ([crates.io](https://crates.io/crates/codcel-calculation-engine))
   Excel-compatible formula engine supporting hundreds of functions.
 
 - **[Codcel Table Engine](https://github.com/codcel-io/codcel-table-engine)**
+  ([crates.io](https://crates.io/crates/codcel-table-engine))
   High-performance columnar table engine used by generated code.
 
 - **[Codcel Parquet Engine](https://github.com/codcel-io/codcel-parquet-engine)**
+  ([crates.io](https://crates.io/crates/codcel-parquet-engine))
   Read and write Apache Parquet files for efficient big-data storage.
 
 - **[Codcel PostgreSQL Engine](https://github.com/codcel-io/codcel-postgresql-engine)**
+  ([crates.io](https://crates.io/crates/codcel-postgresql-engine))
   Connect generated applications directly to PostgreSQL databases.
 
 - **[Codcel Documentation](https://github.com/codcel-io/codcel-docs)** (this site)
@@ -85,6 +92,7 @@ Use this index as a guide to every major topic.
 - [Excel to Code](./excel-to-code.md)
 - [Excel Guidelines](./codcel-excel-guidelines.md)
 - [Annotations](./annotations.md)
+- [Inputs & Outputs](./inputs-outputs.md)
 - [Settings Reference](./settings.md)
 - [Runtime Formatting](./runtime-formatting.md)
 - [Command Line Interface](./cli.md)
