@@ -552,6 +552,20 @@ Rounds a number up to the nearest odd integer.
 
 ## P
 
+### [PERCENTOF](./mathematical-functions/percentof.md)
+Returns what fraction of a whole a subset represents, as `SUM(data_subset) / SUM(data_all)`.
+
+- **Purpose:** Expresses a subset as a share of a total without writing `SUM(...)/SUM(...)` by hand. Available in Microsoft 365.
+
+- **Formula:** `PERCENTOF(data_subset, data_all)`
+  - `data_subset` is the value or range making up the part.
+  - `data_all` is the value or range making up the whole.
+
+- **Example Usage:**
+  - `=PERCENTOF(2, 10)` returns `0.2` (displays as `20%` with a percentage format).
+  - `=PERCENTOF(A1:A2, A1:A3)` returns `0.5` where `A1:A3` contains `1`, `2`, `3`.
+  - `=PERCENTOF(5, 0)` returns `#DIV/0!` (the whole sums to zero).
+
 ### [PI](./mathematical-functions/pi.md)
 Returns the mathematical constant π (pi), approximately `3.14159265358979`.
 

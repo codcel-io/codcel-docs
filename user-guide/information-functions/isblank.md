@@ -135,7 +135,7 @@ Returns the number of blank cells in the range A1:A10
 - `ISBLANK` only returns `TRUE` for cells that are genuinely empty (no content at all).
 - When applied to a literal value (e.g., `ISBLANK(0)` or `ISBLANK("")`), it always returns `FALSE`.
 - For checking if a cell's displayed value appears empty (including empty strings), consider using `LEN(TRIM(A1))=0` instead.
-- `ISBLANK` is part of the IS family of information functions (`ISBLANK`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, `ISLOGICAL`, etc.).
+- `ISBLANK` is part of the IS family of information functions (`ISBLANK`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, [`ISLOGICAL`](./islogical.md), etc.).
 
 ## Applications:
 

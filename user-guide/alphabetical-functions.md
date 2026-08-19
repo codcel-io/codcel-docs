@@ -739,6 +739,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [ISERROR](information-functions/iserror.md)
   Returns TRUE if a value is any error, including #N/A, #VALUE!, #REF!, #DIV/0!, #NUM!, #NAME?, and #NULL!. Useful for universal error handling in formulas.
 
+- [ISLOGICAL](information-functions/islogical.md)
+  Returns TRUE if a value is a logical (Boolean) value; otherwise FALSE. Numbers, text and blanks all return FALSE, even `1` and the text `"TRUE"`.
+
 - [ISNA](information-functions/isna.md)
   Returns TRUE only if a value is the #N/A error; otherwise FALSE. Useful for detecting failed lookups while ignoring other error types.
 
@@ -1008,6 +1011,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 
 - [PERCENTRANK.INC](statistical-functions/percent_rank__inc.md)
   The `PERCENTRANK.INC` function in Excel calculates the **rank of a value as a percentage** of a range of values (including the boundaries).
+
+- [PERCENTOF](mathematical-functions/percentof.md)
+  Returns what fraction of a whole a subset represents, as `SUM(data_subset) / SUM(data_all)`. Returns `#DIV/0!` when the whole sums to zero.
 
 - [PERMUT](statistical-functions/permut.md)
   The `PERMUT` function in Excel is used to **calculate the number of permutations for a given number of objects chosen from a larger set**.

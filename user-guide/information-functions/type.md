@@ -161,7 +161,7 @@ Returns "Text value" if A1 contains text, otherwise "Not text"
 
 - **ISNUMBER**: Returns TRUE if the value is a number.
 - **ISTEXT**: Returns TRUE if the value is text.
-- **ISLOGICAL**: Returns TRUE if the value is a logical value.
+- **[ISLOGICAL](./islogical.md)**: Returns TRUE if the value is a logical value.
 - **[ISERROR](./iserror.md)**: Returns TRUE if the value is any error.
 - **[ISNA](./isna.md)**: Returns TRUE if the value is the #N/A error.
 - **[ERROR.TYPE](./error_type.md)**: Returns the specific error code (1–7) — narrower than `TYPE`, which only reports `16` for any error.

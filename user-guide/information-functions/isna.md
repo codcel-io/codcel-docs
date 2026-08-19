@@ -131,7 +131,7 @@ Reports whether "Apple" appears in the list and at which row
 - `ISNA` is the narrowest of the error-detection functions: it matches one specific error, not the whole family.
 - In modern Excel, `IFNA` is usually preferred over `IF(ISNA(...), ...)` for handling lookup failures — it's shorter and evaluates the lookup only once.
 - `ISNA` returns `FALSE` for `#DIV/0!`, `#VALUE!`, and other errors. Use `ISERROR` if you want to catch every error type, or `ISERR` to catch every error *except* `#N/A`.
-- `ISNA` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, `ISLOGICAL`, etc.).
+- `ISNA` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, [`ISLOGICAL`](./islogical.md), etc.).
 - When applied to an array or range, `ISNA` evaluates each element and returns a corresponding array of TRUE/FALSE values.
 
 ## Applications:

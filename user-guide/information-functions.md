@@ -99,6 +99,19 @@ Checks whether a value is any error, returning TRUE for all error types includin
     - `=IF(ISERROR(A1/B1), "Error", A1/B1)` returns a fallback message for any error
     - `=SUMPRODUCT(--ISERROR(A1:A10))` counts cells containing any error
 
+### [ISLOGICAL](./information-functions/islogical.md)
+
+Checks whether a value is a logical (Boolean) value, returning TRUE only for `TRUE` and `FALSE` and FALSE for numbers, text, dates, errors, and blanks.
+
+- **Purpose:** Confirms that a value genuinely is a Boolean rather than a number or a piece of text that merely looks like one, so logical inputs can be validated before use.
+- **Formula:** `ISLOGICAL(value)`
+    - `value` is the value or expression you want to test.
+- **Example Usage:**
+    - `=ISLOGICAL(TRUE)` returns `TRUE`
+    - `=ISLOGICAL(1)` returns `FALSE` (`1` coerces to `TRUE` in arithmetic, but it is a number)
+    - `=ISLOGICAL("TRUE")` returns `FALSE` (text that reads like a Boolean is not a Boolean)
+    - `=ISLOGICAL(A1>10)` returns `TRUE` (a comparison always produces a logical value)
+
 ### [ISNA](./information-functions/isna.md)
 
 Checks whether a value is the `#N/A` error specifically, returning TRUE only for `#N/A` and FALSE for all other errors and non-error values.

@@ -132,7 +132,7 @@ Returns the number of cells in A1:A10 that contain any error
 - `ISERROR` catches **all** error types, including `#N/A`. If you want to exclude `#N/A` from detection, use `ISERR` instead.
 - If you only want to detect `#N/A` errors, use `ISNA`.
 - For simpler error handling, consider `IFERROR` (handles all errors in a single function) or `IFNA` (handles only `#N/A`).
-- `ISERROR` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, `ISLOGICAL`, etc.).
+- `ISERROR` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, [`ISLOGICAL`](./islogical.md), etc.).
 - When used with `IF`, `ISERROR` evaluates the expression twice (once for the test and once for the result). `IFERROR` is more efficient as it evaluates only once.
 - `ISERROR` returns `FALSE` for blank cells, since a blank cell is not an error.
 
