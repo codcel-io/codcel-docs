@@ -72,7 +72,7 @@ The CDF cannot be expressed in closed form, but Excel uses numerical methods to 
    ```excel
    =1 - NORM.S.DIST(2.33, TRUE)
    ```
-   Result: `0.009902`.
+   Result: `0.009903`.
 
    This indicates a very small chance (0.99%) of obtaining a value greater than 2.33.
 

@@ -53,7 +53,7 @@ Essentially, it integrates the area under the bell curve up to the specified `z`
    ```excel
    =NORMSDIST(-2)
    ```
-   Result: `0.022751`.
+   Result: `0.022750`.
 
 3. **Statistical Analysis**:
    Use the function to find the probability below a specific `z`-score, such as `0`:
