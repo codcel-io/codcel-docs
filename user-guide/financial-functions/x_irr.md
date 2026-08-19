@@ -39,12 +39,12 @@ XIRR(values, dates, [guess])
    `=XIRR({-5000, 1200, 1500, 3600, 2000}, {"2023-01-01", "2023-06-01", "2024-01-01", "2024-12-01", "2025-06-01"})`  
    Calculates the internal rate of return for an investment of $5,000, with cash inflows occurring at irregular
    intervals.  
-   **Result**: `0.1634` (16.34% annualized IRR).
+   **Result**: `0.3794` (37.94% annualized IRR).
 
 2. **Using a Guess**:
    `=XIRR({-8000, 2000, 4000, 5000}, {"2023-01-01", "2023-09-01", "2024-05-01", "2024-12-01"}, 0.2)`  
    Specifies an initial guess of 20% for the IRR.  
-   **Result**: `0.2135` (21.35% annualized IRR).
+   **Result**: `0.2451` (24.51% annualized IRR).
 
 ### Notes:
 

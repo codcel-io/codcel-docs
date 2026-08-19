@@ -46,7 +46,7 @@ MIRR(values, finance_rate, reinvest_rate)
    Calculates the Modified Internal Rate of Return for an investment with an initial outflow
    of $1,000 and subsequent yearly inflows of $300, $500, and $700, assuming an 8% cost of financing and a 10%
    reinvestment rate.  
-   **Result**: `12.13%` *(example value; actual result depends on calculation).*
+   **Result**: `17.28%`
 
 2. `=MIRR(A1:A5, 0.05, 0.07)`  
    Computes the MIRR for a cash flow series stored in the range `A1:A5`, with a financing rate of 5% and a reinvestment
@@ -56,7 +56,7 @@ MIRR(values, finance_rate, reinvest_rate)
 3. `=MIRR({-50000, 20000, 15000, 10000, 25000}, 0.06, 0.08)`  
    Calculates the MIRR of a 5-period cash flow starting with an outflow of $50,000, adjusted for a 6% financing rate and
    8% reinvestment rate.  
-   **Result**: `8.94%` *(example value).*
+   **Result**: `11.93%`
 
 ---
 

@@ -53,7 +53,7 @@ Where the range `A1:A5` includes the following cash flows:
 - Initial investment: `-1000`
 - Returns: `200, 300, 400, 500`
 
-**Result:** `14.49%`
+**Result:** `12.83%`
 
 This calculates the internal rate of return based on the series of cash flows.
 
@@ -70,7 +70,7 @@ Where the range `B1:B6` includes the following cash flows:
 - Initial investment: `-5000`
 - Returns: `1000, 1500, 2000, 2500, 3000`
 
-**Result:** `18.86%`
+**Result:** `23.29%`
 
 This calculates the IRR using an initial guess of `15%`, ensuring faster convergence or resolving multiple IRR cases.
 
