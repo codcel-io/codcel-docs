@@ -136,11 +136,11 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [BINOM.DIST.RANGE](statistical-functions/binom__dist__range.md)
   Returns the probability of a number of successes falling within a range for a binomial distribution.
 
+- [BINOM.INV](statistical-functions/binom__inv.md)
+  Returns the smallest value for which the cumulative binomial distribution is greater than or equal to a criterion probability.
+
 - [BINOMDIST](statistical-functions/binom_dist.md)
   Calculates the individual term binomial probability for a specified number of successes in a series of independent trials.
-
-- [BINOMINV](statistical-functions/binom_inv.md)
-  Returns the smallest value for which the cumulative binomial distribution is greater than or equal to a criterion probability.
 
 - [BITAND](engineering-functions/bit_and.md)
   Performs a bitwise AND operation on two non‑negative integers. Returns a decimal number whose bits are 1 only where both inputs have 1s.
@@ -1489,10 +1489,10 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [YIELD](financial-functions/yield.md)
   Returns the yield of a security that pays periodic interest based on price, rate, and day count basis.
 
-- [YIELD.DISC](financial-functions/yield_disc.md)
+- [YIELDDISC](financial-functions/yield_disc.md)
   Returns the annual yield of a discounted security, such as a Treasury bill, based on price and redemption value.
 
-- [YIELD.MAT](financial-functions/yield_mat.md)
+- [YIELDMAT](financial-functions/yield_mat.md)
   Returns the annual yield of a security that pays interest at maturity based on price and day count basis.
 
 - [Z.TEST](statistical-functions/z__test.md)

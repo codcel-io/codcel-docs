@@ -175,14 +175,14 @@ statistical analysis when assessing probabilities over a range of outcomes.
   - `=BINOM.DIST.RANGE(20, 0.3, 5, 10)` computes the probability of between 5 and 10 successes (inclusive) in 20 trials
     with a success probability of 0.3.
 
-### [BINOMINV](./statistical-functions/binom_inv.md)
+### [BINOM.INV](./statistical-functions/binom__inv.md)
 Calculates the smallest value for which the cumulative binomial distribution is equal to or greater than a specified
 criterion. This is useful for determining thresholds in binomial distributions.
 
 - **Purpose:** Useful when you need to find a cutoff point for successes in a series of trials where the cumulative
   probability meets a specific criterion.
 
-- **Formula:** `BINOMINV(trials, probability_s, alpha)`
+- **Formula:** `BINOM.INV(trials, probability_s, alpha)`
   - `trials`: The number of independent trials.
   - `probability_s`: The probability of success on each trial.
   - `alpha`: The criterion, a probability threshold in the range of [0, 1].
