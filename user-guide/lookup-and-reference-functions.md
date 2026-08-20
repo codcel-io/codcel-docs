@@ -172,13 +172,13 @@ Groups data by one or more row fields and aggregates values using a specified fu
 
 ## H
 
-### [HSTACK](./lookup-and-reference-functions/h_stack.md) *(Coming soon)*
+### [HSTACK](./lookup-and-reference-functions/h_stack.md)
 Stacks values horizontally into a single array row-wise, placing each array or value next to the previous.
 
 - **Purpose:** Combines multiple arrays or values into a horizontal array. This is useful for aligning data from different sources into a single row-based structure.
 
 - **Formula:** `HSTACK(array1, [array2], …)`
-    - `array1, array2, …` are the values or arrays to be stacked. Scalars are treated as 1×1 arrays. Arrays with different row sizes are padded with blank cells as needed.
+    - `array1, array2, …` are the values or arrays to be stacked. Scalars are treated as 1×1 arrays. Every array must have the same number of rows. (Excel pads shorter arrays with `#N/A`; Codcel returns an error instead — see the [HSTACK page](./lookup-and-reference-functions/h_stack.md).)
 
 - **Example Usage:**
     - `=HSTACK("Apple", "Banana", "Cherry")` returns a horizontal array:
@@ -186,10 +186,10 @@ Stacks values horizontally into a single array row-wise, placing each array or v
         Apple   Banana   Cherry
         ```
     - `=HSTACK(A1:A3, B1:B3)` stacks the two ranges side by side.
-    - `=HSTACK({"A","B"}, "C", {"D";"E"})` results in:
+    - `=HSTACK({"A";"B"}, {"C","D";"E","F"})` results in:
         ```
-        A   B   C   D
-                    E
+        A   C   D
+        B   E   F
         ```
 
 ## O
@@ -356,13 +356,13 @@ Returns a list of unique values from a range or array.
 
 ## V
 
-### [VSTACK](./lookup-and-reference-functions/v_stack.md) *(Coming soon)*
+### [VSTACK](./lookup-and-reference-functions/v_stack.md)
 Stacks values vertically into a single array column-wise, aligning each array or value underneath the previous.
 
 - **Purpose:** Combines multiple arrays or values into a vertical array. This is useful for merging data from different sources into a single column-based structure.
 
 - **Formula:** `VSTACK(array1, [array2], …)`
-    - `array1, array2, …` are the values or arrays to be stacked. Scalars are treated as 1×1 arrays. Arrays with different column sizes are padded with blank cells as needed.
+    - `array1, array2, …` are the values or arrays to be stacked. Scalars are treated as 1×1 arrays. Every array must have the same number of columns. (Excel pads narrower rows with `#N/A`; Codcel returns an error instead — see the [VSTACK page](./lookup-and-reference-functions/v_stack.md).)
 
 - **Example Usage:**
     - `=VSTACK("Apple", "Banana", "Cherry")` returns a vertical array:
@@ -372,12 +372,11 @@ Stacks values vertically into a single array column-wise, aligning each array or
         Cherry
         ```
     - `=VSTACK(A1:A3, B1:B3)` stacks the two ranges vertically.
-    - `=VSTACK({"A","B"}, {"C";"D"}, "E")` results in:
+    - `=VSTACK({"A","B"}, {"C","D";"E","F"})` results in:
         ```
         A   B
-        C
-        D
-        E
+        C   D
+        E   F
         ```
 
 ## W

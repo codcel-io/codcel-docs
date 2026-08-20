@@ -29,7 +29,7 @@ HSTACK(array1, [array2], …)
 1. Each input is evaluated and converted into an array if necessary.
 2. Arrays are aligned **row-wise** and concatenated **column-wise**.
 3. The final result is a single horizontal array where each input is placed to the right of the previous one.
-4. If arrays have differing row counts, Excel pads shorter arrays with blanks.
+4. All inputs must have the same number of rows. Excel pads shorter arrays with `#N/A`; **Codcel returns an error instead** — see *Differences from Excel* below.
 
 ## Examples:
 
@@ -60,25 +60,31 @@ Assume:
 2   4
 ```
 
-### 3. Stack Mixed Scalars and Arrays:
+### 3. Stack Arrays of Differing Widths:
 
 ```excel
-=HSTACK({"A","B"}, "C", {"D";"E"})
+=HSTACK({"A";"B"}, {"C","D";"E","F"})
 ```
 
 **Result:**
 ```
-A   B   C   D
-            E
+A   C   D
+B   E   F
 ```
 
-Note how `"C"` is broadcasted across two rows to match the height of `{"D";"E"}`.
+The arrays may have different numbers of columns, but they must have the same number of rows.
 
 ## Notes:
 
 - `HSTACK` is available in Excel 365 and Excel 2021.
 - It automatically resizes the result (spills) to fit the array.
-- If used with incompatible types (e.g., arrays with mismatched structures), the function may return a `#SPILL!` error.
+- In Codcel, arrays with mismatched row counts return an error rather than a spilled result.
+
+## Differences from Excel:
+
+Excel pads ragged input with `#N/A`, so `=HSTACK(1, A1:A3)` returns `1` / `#N/A` / `#N/A`. Codcel returns the error `HSTACK: All arrays must have the same number of rows` instead — an `#N/A` cell cannot be represented in a numeric spill in generated code, so an explicit error is preferred over an unrepresentable value.
+
+Note that a scalar is treated as a 1x1 array, so scalars can only be combined with arrays that are also one row tall. `=HSTACK("Apple","Banana","Cherry")` and `=HSTACK(A1:B1, C1)` both work; `=HSTACK(1, A1:A3)` does not.
 
 ## Applications:
 

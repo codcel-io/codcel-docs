@@ -29,7 +29,7 @@ VSTACK(array1, [array2], …)
 1. Each input is interpreted as an array (or converted to one).
 2. Arrays are aligned **column-wise** and concatenated **row-wise**.
 3. The result is a single vertical array where each input appears on a new row.
-4. Arrays with different column counts are padded with blanks where needed.
+4. All inputs must have the same number of columns. Excel pads narrower rows with `#N/A`; **Codcel returns an error instead** — see *Differences from Excel* below.
 
 ## Examples:
 
@@ -64,27 +64,32 @@ Assume:
 4
 ```
 
-### 3. Stack Mixed Arrays and Scalars:
+### 3. Stack Several Arrays of Differing Heights:
 
 ```excel
-=VSTACK({"A","B"}, {"C";"D"}, "E")
+=VSTACK({"A","B"}, {"C","D";"E","F"})
 ```
 
 **Result:**
 ```
 A   B
-C
-D
-E
+C   D
+E   F
 ```
 
-Here, `"E"` is appended as a new row.
+The arrays may have different numbers of rows, but they must have the same number of columns.
 
 ## Notes:
 
 - `VSTACK` is available in Excel 365 and Excel 2021.
 - It returns a **spilled array** that resizes automatically.
-- Mismatched column widths are padded with empty cells to maintain alignment.
+- In Codcel, arrays with mismatched column counts return an error rather than a spilled result.
+
+## Differences from Excel:
+
+Excel pads ragged input with `#N/A`, so `=VSTACK(A1:C1, "x")` returns a row of `x` / `#N/A` / `#N/A`. Codcel returns the error `VSTACK: All arrays must have the same number of columns` instead — an `#N/A` cell cannot be represented in a numeric spill in generated code, so an explicit error is preferred over an unrepresentable value.
+
+Note that a scalar is treated as a 1x1 array, so scalars can only be combined with arrays that are also one column wide. `=VSTACK("Apple","Banana","Cherry")` works; `=VSTACK(A1:C1, "x")` does not.
 
 ## Applications:
 

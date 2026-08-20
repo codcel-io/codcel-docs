@@ -91,6 +91,7 @@ Codcel supports all standard Excel 365 dynamic array functions:
 - **Spill references** (`A1#` syntax) are supported when the spill source is a known dynamic array formula
 - **Implicit intersection** (`@` operator) behaviour may differ from Excel in edge cases -- see [Differences](./differences.md)
 - Dynamic arrays in table columns are not supported -- tables use fixed schemas
+- `HSTACK` and `VSTACK` require every input to share the stacking dimension. Excel pads ragged input with `#N/A`; Codcel returns an error instead -- see [HSTACK](./lookup-and-reference-functions/h_stack.md)
 
 ---
 
