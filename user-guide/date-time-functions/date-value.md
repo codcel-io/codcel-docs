@@ -10,8 +10,8 @@ See LICENSE in the project root.
 
 The `DATEVALUE` function in Excel is used to convert a date represented as text into an Excel serial number. This serial
 number allows the text-based date to be used in mathematical operations or date/time functions within Excel. The
-resulting number corresponds to the number of days since January 1, 1900 (or January 1, 1904, depending on the date
-system used).
+resulting number corresponds to the number of days since January 1, 1900. Codcel always uses the 1900 date system --
+see [Date Handling](../differences/date-handling.md) for the details.
 
 ## Syntax
 
