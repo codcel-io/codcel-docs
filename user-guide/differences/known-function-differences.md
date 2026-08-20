@@ -26,6 +26,25 @@ Non-seasonal forecasting produces results that differ from Excel by approximatel
 
 The TEXT function supports common format strings but may not handle every custom format pattern that Excel accepts. Standard number, date, and currency formats work correctly.
 
+### TOCOL / TOROW
+
+The optional `ignore` argument filters blank values only. Codcel does not track error values as a filterable
+category during reshaping, so:
+
+| `ignore` | Excel | Codcel |
+|---|---|---|
+| `0` | Keep all values | Keep all values |
+| `1` | Ignore blanks | Ignore blanks |
+| `2` | Ignore errors | **Keeps all values** — behaves as `0` |
+| `3` | Ignore blanks and errors | **Ignores blanks only** — behaves as `1` |
+
+An out-of-range `ignore` value is also accepted silently and treated as `0`, where Excel returns `#VALUE!`.
+
+**Workaround:** wrap the array in `IFERROR` to substitute or blank out errors before reshaping — for example
+`=TOCOL(IFERROR(A1:C10, ""), 1)` removes both blanks and errors.
+
+See [TOCOL](../lookup-and-reference-functions/tocol.md) and [TOROW](../lookup-and-reference-functions/torow.md).
+
 ---
 
 ## Non-Deterministic Functions

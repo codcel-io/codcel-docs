@@ -8,16 +8,17 @@ See LICENSE in the project root.
 
 ## VARP Function
 
-The `VARP` function in Excel is used to calculate the variance for an entire population of numeric data.
-Variance measures how far each number in the dataset is from the mean (average) and is often used in statistics to
-analyze data spread.
+The `VARP` function in Excel is used to **calculate the variance for an entire population**. Variance measures how far
+the data values deviate from the mean (average) of the dataset. This function is particularly useful in statistics when
+working with the complete dataset of a population (not a sample).
 
 ### Key Features of VARP:
 
-- Calculates the variance assuming the dataset represents the **entire population**.
-- Useful for statistical analysis of data variability across a complete group.
-- In modern Excel versions, `VARP` has been replaced by the `VAR.P` function for better clarity, but remains available
-  for compatibility.
+- **Population-Based Calculation**: Assumes that the dataset represents the entire population, not a sample.
+- **Measures Dispersion**: Helps assess the variability or spread of the data values around the mean.
+- **Squared Deviations**: Calculates variance as the average of squared differences from the mean, making all deviations
+  positive.
+- Retained for backward compatibility; the modern equivalent is [`VAR.P`](../statistical-functions/var__p.md).
 
 ### Syntax:
 
@@ -25,40 +26,75 @@ analyze data spread.
 VARP(number1, [number2], ...)
 ```
 
-- **number1**, **number2**, ...: These are the numeric values, cell ranges, or arrays forming the population data.
-    - Non-numeric values within a range are ignored.
-    - Up to 30 arguments can be used in older Excel versions; newer versions allow more.
+- **number1, number2, ...**: The numbers, ranges, or references for which you want to calculate the variance. At least
+  one input is required.
+    - You can provide up to 255 arguments in Excel.
 
-### Example:
+### How It Works:
 
-1. **Calculating Variance**  
-   For the dataset `{10, 12, 23, 23, 16}`, calculate the variance of the population.  
-   Formula:  
-   `=VARP(10, 12, 23, 23, 16)`  
-   **Result**: `27.36`
+1. The function calculates the **mean** of the provided numbers.
+2. Computes the squared differences between each value and the mean.
+3. Averages these squared differences to achieve the variance.
 
-2. **Using Cell Ranges**  
-   If your data is stored in cells A1:A5 (with the same values):  
-   Formula:  
-   `=VARP(A1:A5)`  
-   **Result**: `27.36`
+- Formulaically, it calculates:
+
+   ```plaintext
+   VARP = (Σ(x - μ)²) / N
+   ```
+  Where:
+    - `x` = each data point
+    - `μ` = mean of the dataset
+    - `N` = number of data points in the population
+
+### Examples:
+
+1. **Basic Variance Calculation**:
+   For the dataset `{4, 6, 8, 10, 12}`:
+
+   ```excel
+   =VARP(4, 6, 8, 10, 12)
+   ```
+
+   This calculates the variance for the entire population represented by these numbers.
+
+2. **Calculating Variance for Data in a Range**:
+   If your population data is stored in cells `A1:A5`:
+
+   ```excel
+   =VARP(A1:A5)
+   ```
+
+   Excel will calculate the variance for all the values in this range.
+
+3. **Using Mixed Range and Number Inputs**:
+   You can mix cell ranges and individual numbers:
+
+   ```excel
+   =VARP(A1:A3, 5, 7, 9)
+   ```
+
+   This combines the values from `A1:A3` with `5, 7, and 9` for the variance calculation.
 
 ### Notes:
 
-- **Population vs. Sample**:
-    - Use `VARP` to calculate variance for **entire populations**.
-    - Use `VAR` or `VAR.S` for samples of the population.
-- **No Variation**:
-    - If the dataset contains a single value or all values are identical, the result is `0`.
-- **Errors**:
-    - Returns `#DIV/0!` if no numeric values are provided in the input.
-    - Returns `#NUM!` for invalid or empty ranges.
+- **Dataset Size**:
+    - Use `VARP` only when you have data for the entire population.
+    - For sample data, use the **`VAR`** function instead, as it adjusts for bias by dividing by `(N-1)` instead of `N`.
+- **Handles Numeric Values Only**:
+    - Non-numeric values in the input (e.g., text or logical values) are ignored.
+    - If the dataset contains errors, Excel will return an error (e.g., `#VALUE!`).
 
-### Use Cases:
+### Applications:
 
-- **Research and Analysis**: Understand the variability in an entire population.
-- **Risk Assessment**: Analyze the degree of spread in population-level metrics.
-- **Performance Measurement**: Track deviations within a complete dataset in quality control or monitoring systems.
+- **Statistical Analysis**: Quantifies the variability in a dataset, which helps in understanding population trends.
+- **Quality Control**: Measures consistency and dispersion in production data.
+- **Financial Modeling**: Assess the risk or volatility of a set of data points, e.g., stock price fluctuations over
+  time.
+- **Scientific Experiments**: Analyzes the spread or consistency of results.
 
-> **Tip**: Use `VAR.P` in modern Excel versions to replace `VARP` for better compatibility with updated Excel naming
-conventions.
+> **Tip**: If you're unsure whether your dataset represents the population or just a sample, consider using `VAR` to
+> safely account for sample-size bias. Using `VARP` for sample data could underestimate the variance.
+>
+> **Note**: `VARP` is still supported for backward compatibility but has been replaced by
+> [`VAR.P`](../statistical-functions/var__p.md) in modern Excel versions, which provides improved naming consistency.
+> The two functions are equivalent.

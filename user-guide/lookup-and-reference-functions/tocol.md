@@ -14,7 +14,7 @@ The `TOCOL` function in Excel is used to **convert an array or range into a sing
 
 - Converts any array or range into a single column.
 - Allows control over the scan order (by row or by column).
-- Can ignore blanks, errors, or both during conversion.
+- Can ignore blanks during conversion (see the note on `ignore` below — Codcel does not filter errors).
 - Works seamlessly with other dynamic array functions.
 - Returns a spilled array that resizes automatically.
 
@@ -28,8 +28,8 @@ TOCOL(array, [ignore], [scan_by_column])
 - **ignore** (optional): Specifies what to ignore. Default is 0.
   - `0` - Keep all values (default)
   - `1` - Ignore blanks
-  - `2` - Ignore errors
-  - `3` - Ignore blanks and errors
+  - `2` - Ignore errors in Excel. **Codcel does not filter errors — this behaves as `0`.**
+  - `3` - Ignore blanks and errors in Excel. **Codcel filters blanks only, so this behaves as `1`.**
 - **scan_by_column** (optional): Specifies how to read the array. Default is FALSE.
   - `FALSE` - Scan the array by row (left to right, then down). This is the default.
   - `TRUE` - Scan the array by column (top to bottom, then right).
@@ -39,7 +39,7 @@ TOCOL(array, [ignore], [scan_by_column])
 1. Takes the input array and reads each value in the specified order.
 2. By default, scans by row (left to right across each row, then moves to the next row).
 3. If `scan_by_column` is TRUE, scans by column (top to bottom in each column, then moves to the next column).
-4. Optionally filters out blanks and/or errors based on the `ignore` parameter.
+4. Optionally filters out blanks based on the `ignore` parameter. Codcel does not filter error values.
 5. Returns all values stacked into a single vertical column.
 
 ## Examples:
@@ -111,7 +111,7 @@ D
 
 (Blank cells are removed from the result)
 
-### 4. Ignore Errors:
+### 4. Ignore Errors (Not Filtered in Codcel):
 
 Given a range with errors:
 ```
@@ -126,15 +126,13 @@ Given a range with errors:
 
 **Result:**
 ```
-1
-2
-3
-4
+All six values, errors included — Codcel does not filter errors, so `2` behaves as `0`
 ```
 
-(Error values are excluded from the result)
+(In Excel this would exclude `#N/A` and `#VALUE!`. In Codcel the errors are retained and propagate to the
+result. Filter them out with `IFERROR` before calling `TOCOL` if you need Excel's behaviour.)
 
-### 5. Ignore Both Blanks and Errors:
+### 5. Ignore Both Blanks and Errors (Blanks Only in Codcel):
 
 ```excel
 =TOCOL(A1:C3, 3)
@@ -142,8 +140,10 @@ Given a range with errors:
 
 **Result:**
 ```
-Returns only non-blank, non-error values in a single column
+Returns non-blank values in a single column — error values are retained
 ```
+
+(Codcel treats `3` the same as `1`. In Excel this would also drop error values.)
 
 ### 6. Convert Array Constant:
 
@@ -191,6 +191,10 @@ Joins all values from the range into a comma-separated string
 - `TOCOL` is available in Excel 365 and Excel 2021 or later versions.
 - The function returns a dynamic spilled array.
 - When `ignore` is set to filter values, the resulting array may be smaller than the original.
+- **Codcel difference:** the `ignore` argument filters blanks only. `2` (ignore errors) is a no-op and `3`
+  (ignore blanks and errors) drops blanks alone. An out-of-range `ignore` value is accepted silently and
+  treated as `0` rather than returning `#VALUE!`. See
+  [Known Function Differences](../differences/known-function-differences.md).
 - If the input array is already a single column, `TOCOL` returns it unchanged (unless filtering is applied).
 - Empty results return a `#CALC!` error if all values are filtered out.
 

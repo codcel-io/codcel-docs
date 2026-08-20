@@ -133,7 +133,7 @@ If cell A1 contains 123 (as number):
 ## Related Functions:
 
 - **VALUE**: Converts text that represents numbers to actual numbers.
-- **ISNUMBER**: Tests whether a value is a number.
+- **[ISNUMBER](../mathematical-functions/is_number.md)**: Tests whether a value is a number.
 - **TYPE**: Returns the data type of a value.
 
 > **Tip:** While `N` is available in Excel, it's rarely used in modern Excel formulas. Consider `VALUE` for text-to-number conversion or `ISNUMBER` for data type checking instead.

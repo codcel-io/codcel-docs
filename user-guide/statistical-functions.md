@@ -1350,22 +1350,6 @@ function can compute either the probability density function (PDF) or cumulative
   - `=NORM.S.DIST(1.96, FALSE)` computes the probability density function for `z = 1.96`.
   - `=NORM.S.DIST(A1, TRUE)` evaluates the cumulative standard normal distribution for the value in cell `A1`.
 
-### [NORMSINV](./statistical-functions/norm_s_inv.md)
-Calculates the inverse of the standard normal cumulative distribution. This function determines the z-value such that
-the cumulative standard normal probability corresponds to a specified value.
-
-- **Purpose:** Commonly used in statistics to find the z-value (standard score) for a given cumulative probability under
-  the standard normal distribution.
-
-- **Formula:** `NORMSINV(probability)`
-  - `probability`: A cumulative probability value (must be between 0 and 1).
-
-- **Example Usage:**
-  - `=NORMSINV(0.5)` returns `0`, as `0.5` is the cumulative probability at the mean of the standard normal
-    distribution.
-  - `=NORMSINV(0.9)` calculates the z-value corresponding to the 90th percentile of the standard normal distribution.
-  - `=NORMSINV(A1)` computes the z-value for the cumulative probability in cell `A1`.
-
 ### [NORM.S.INV](./statistical-functions/norm__s__inv.md)
 Calculates the inverse of the standard normal cumulative distribution. This function determines the z-value such that
 the cumulative standard normal probability corresponds to the specified value.
@@ -2088,21 +2072,6 @@ sample rather than the entire population.
 - **Example Usage:**
   - `=VAR(A1:A10)` calculates the variance of the sample represented by the values in range `A1:A10`.
  
-### [VARP](./statistical-functions/var_p.md)
-Calculates the variance of a population based on the entire dataset (ignoring sample bias). This function is used when
-you want to determine the variance of all values in the dataset, not just a sample.
-
-- **Purpose:** Useful for statistical analysis to measure how far individual data points are from the mean, for an
-  entire population.
-
-- **Formula:** `VARP(array)`
-  - `array`: The data set to be analyzed, which should be a range of numerical values.
-
-- **Example Usage:**
-  - `=VARP(A1:A10)` calculates the variance of the population represented by the values in range `A1:A10`.
-  - `=VARP(B1:B15)` computes the variance using the population data in range `B1:B15`.
-  - `=VARP(C1:C20)` determines the population variance based on the numerical data in range `C1:C20`.
-
 ### [VAR.P](./statistical-functions/var__p.md)
 Calculates the variance of a population based on the entire dataset (ignoring sample bias). This function is used when
 you want to determine the variance of all values in the dataset, not just a sample.

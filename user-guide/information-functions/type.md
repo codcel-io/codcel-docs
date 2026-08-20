@@ -159,8 +159,8 @@ Returns "Text value" if A1 contains text, otherwise "Not text"
 
 ## Related Functions:
 
-- **ISNUMBER**: Returns TRUE if the value is a number.
-- **ISTEXT**: Returns TRUE if the value is text.
+- **[ISNUMBER](../mathematical-functions/is_number.md)**: Returns TRUE if the value is a number.
+- **[ISTEXT](./istext.md)**: Returns TRUE if the value is text.
 - **[ISLOGICAL](./islogical.md)**: Returns TRUE if the value is a logical value.
 - **[ISERROR](./iserror.md)**: Returns TRUE if the value is any error.
 - **[ISNA](./isna.md)**: Returns TRUE if the value is the #N/A error.

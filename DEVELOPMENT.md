@@ -68,7 +68,7 @@ codcel-docs/
 
 - **`mkdocs.yml`** — controls the site name, theme, navigation, and plugins.
 - **`user-guide/`** — all Markdown files live here. MkDocs serves this as the root.
-- **Navigation** — top-level sections are defined explicitly in `mkdocs.yml`. Individual function pages (460+) are not in the sidebar — they are accessed via links from category index pages.
+- **Navigation** — top-level sections are defined explicitly in `mkdocs.yml`. Individual function pages (497) are not in the sidebar — they are accessed via links from category index pages.
 
 ## Adding a New Page
 

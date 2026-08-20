@@ -27,7 +27,7 @@ The user guide covers everything from getting started to architecture:
 - **Output Targets** — calculation libraries, REST servers, web clients, fullstack UI, integrations (OpenAPI, CLI, MCP, JNI, FFI)
 - **Tables & Data** — tables, CRUD operations, named ranges
 - **Excel Concepts** — dynamic arrays, functional programming, circular references
-- **Excel Function References** — 460+ supported functions across 13 categories (financial, statistical, mathematical, engineering, text, date/time, lookup, logical, and more)
+- **Excel Function References** — 497 supported functions across 13 categories (financial, statistical, mathematical, engineering, text, date/time, lookup, logical, and more)
 - **Performance & Large Data** — big data handling, One Billion Row Challenge
 - **Differences** — where Codcel differs from Excel (rounding, date handling, type conversions)
 - **Troubleshooting** — error and warning codes
@@ -39,7 +39,7 @@ Codcel's core engines are open source. The generated projects you get from Codce
 
 | Engine | Description |
 |---|---|
-| [Codcel Calculation Engine](https://github.com/codcel-io/codcel-calculation-engine) | 460+ Excel-compatible functions implemented in pure Rust |
+| [Codcel Calculation Engine](https://github.com/codcel-io/codcel-calculation-engine) | 497 Excel-compatible functions implemented in pure Rust |
 | [Codcel Table Engine](https://github.com/codcel-io/codcel-table-engine) | Shared traits and utilities for Excel-like table operations |
 | [Codcel Parquet Engine](https://github.com/codcel-io/codcel-parquet-engine) | Read-only Parquet table engine with query caching |
 | [Codcel PostgreSQL Engine](https://github.com/codcel-io/codcel-postgresql-engine) | Full CRUD PostgreSQL table engine with connection pooling |

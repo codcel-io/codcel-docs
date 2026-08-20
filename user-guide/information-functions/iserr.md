@@ -134,7 +134,7 @@ Returns the number of cells in A1:A10 that contain errors other than #N/A
 - If you want to catch all errors including `#N/A`, use `ISERROR` instead.
 - If you only want to detect `#N/A` errors, use `ISNA`.
 - For simpler error handling, consider `IFERROR` (handles all errors) or `IFNA` (handles only `#N/A`).
-- `ISERR` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, [`ISLOGICAL`](./islogical.md), etc.).
+- `ISERR` is part of the IS family of information functions ([`ISBLANK`](./isblank.md), `ISERR`, [`ISERROR`](./iserror.md), [`ISEVEN`](./iseven.md), [`ISLOGICAL`](./islogical.md), [`ISNA`](./isna.md), [`ISNONTEXT`](./isnontext.md), [`ISNUMBER`](../mathematical-functions/is_number.md), [`ISODD`](./isodd.md), [`ISTEXT`](./istext.md), etc.).
 - When used inside `IF`, `ISERR` allows you to provide fallback values for formula errors while letting `#N/A` pass through for separate handling.
 
 ## Applications:
@@ -153,8 +153,8 @@ Returns the number of cells in A1:A10 that contain errors other than #N/A
 - **[IFERROR](../conditional-functions/if_error.md)**: Returns a specified value if a formula evaluates to any error; otherwise returns the formula result.
 - **[IFNA](../logical-functions/ifna.md)**: Returns a specified value if a formula evaluates to `#N/A`; otherwise returns the formula result.
 - **[ISBLANK](./isblank.md)**: Returns TRUE if the cell is empty.
-- **ISNUMBER**: Returns TRUE if the value is a number.
-- **ISTEXT**: Returns TRUE if the value is text.
+- **[ISNUMBER](../mathematical-functions/is_number.md)**: Returns TRUE if the value is a number.
+- **[ISTEXT](./istext.md)**: Returns TRUE if the value is text.
 - **[TYPE](./type.md)**: Returns a numeric code indicating the data type of a value.
 
 > **Tip:** Use `ISERR` when you need to handle formula errors separately from lookup failures. A common pattern is to use `ISERR` for catching calculation errors (like `#DIV/0!` or `#VALUE!`) while using `ISNA` or `IFNA` to handle missing data from `VLOOKUP` or `XLOOKUP`. If you don't need to distinguish between error types, `IFERROR` is a simpler alternative that catches everything.

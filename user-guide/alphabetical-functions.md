@@ -739,11 +739,17 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [ISERROR](information-functions/iserror.md)
   Returns TRUE if a value is any error, including #N/A, #VALUE!, #REF!, #DIV/0!, #NUM!, #NAME?, and #NULL!. Useful for universal error handling in formulas.
 
+- [ISEVEN](information-functions/iseven.md)
+  Returns TRUE if a number is even; otherwise FALSE. Decimals are truncated toward zero before the parity test, and 0 counts as even.
+
 - [ISLOGICAL](information-functions/islogical.md)
   Returns TRUE if a value is a logical (Boolean) value; otherwise FALSE. Numbers, text and blanks all return FALSE, even `1` and the text `"TRUE"`.
 
 - [ISNA](information-functions/isna.md)
   Returns TRUE only if a value is the #N/A error; otherwise FALSE. Useful for detecting failed lookups while ignoring other error types.
+
+- [ISNONTEXT](information-functions/isnontext.md)
+  Returns TRUE if a value is anything other than text, including numbers, logicals, errors and blank cells. The exact negation of `ISTEXT`.
 
 - [ISNUMBER](mathematical-functions/is_number.md)
   Returns TRUE if a value is numeric; otherwise FALSE.
@@ -751,11 +757,20 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [ISO.CEILING](mathematical-functions/iso_ceiling.md)
   Rounds a number up to the nearest multiple of significance using ISO-compliant rules.
 
+- [ISODD](information-functions/isodd.md)
+  Returns TRUE if a number is odd; otherwise FALSE. Decimals are truncated toward zero before the parity test, and 0 counts as even.
+
+- [ISOMITTED](information-functions/isomitted.md)
+  Returns TRUE if a LAMBDA argument was omitted at the call site; otherwise FALSE. Useful for giving optional LAMBDA parameters a default value.
+
 - [ISOWEEKNUM](date-time-functions/iso_week_num.md)
   Returns the ISO week number of a date (1–53) according to ISO 8601 rules.
 
 - [ISPMT](financial-functions/is_pmt.md)
   Returns the interest paid for a given period of an investment using simple interest. Useful for straight-line interest on principal.
+
+- [ISTEXT](information-functions/istext.md)
+  Returns TRUE if a value is text; otherwise FALSE. An empty string counts as text, while a truly blank cell does not.
 
 - [JIS](text-functions/jis.md)
   Converts half-width (single-byte) characters in a text string to full-width (double-byte) characters. Equivalent to the `DBCS` function, named after the Japanese Industrial Standard (JIS) character encoding. Inverse of `ASC`.
@@ -904,6 +919,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [N](information-functions/n.md)
   Converts values to numbers. Returns the numeric value for numbers, dates, or logicals; returns 0 for text.
 
+- [NA](information-functions/na.md)
+  Returns the #N/A error value. Useful for marking cells where data is deliberately unavailable so they are excluded from calculations.
+
 - [NEGBINOM.DIST](statistical-functions/neg_binom__dist.md)
   The `NEGBINOM.DIST` function in Excel is used to **calculate the negative binomial distribution**, which represents the probability of a certain number of failures occurring before a specified number of successes is achieved in a series of independent trials.
 
@@ -940,7 +958,7 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [NORMSDIST](statistical-functions/norm_s_dist.md)
   Calculates the standard normal cumulative distribution for a given z-score (mean 0, standard deviation 1).
 
-- [NORMSINV](statistical-functions/norm_s_inv.md)
+- [NORMSINV](compatibility-functions/norm_s_inv.md)
   Returns the inverse of the standard normal cumulative distribution (mean 0, standard deviation 1). Useful for converting probabilities to z-scores.
 
 - [NOT](mathematical-functions/not.md)
@@ -1345,8 +1363,14 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 - [TINV](statistical-functions/t_inv.md)
   The `TINV` function in Excel is used to **return the critical t-value (inverse of the Student's t-distribution)** based on a given probability and the degrees of freedom.
 
+- [TOCOL](lookup-and-reference-functions/tocol.md)
+  Reshapes an array or range into a single column. Supports scanning by row or by column and optionally skipping blanks.
+
 - [TODAY](date-time-functions/today.md)
   Returns the current date as a serial number; updates when the worksheet recalculates.
+
+- [TOROW](lookup-and-reference-functions/torow.md)
+  Reshapes an array or range into a single row. Supports scanning by row or by column and optionally skipping blanks.
 
 - [TRANSPOSE](lookup-and-reference-functions/transpose.md)
   Rotates the orientation of a range or array, converting rows to columns and columns to rows. Useful for restructuring data layouts.
@@ -1368,6 +1392,9 @@ Below is an alphabetical list of all Excel functions documented in this user gui
 
 - [TTEST](statistical-functions/t_test.md)
   The `TTEST` function in Excel is used to **calculate the probability (p-value) associated with a Student's t-test**.
+
+- [TYPE](information-functions/type.md)
+  Returns a numeric code for the data type of a value: 1 number, 2 text, 4 logical, 16 error, 64 array.
 
 - [UNICHAR](text-functions/uni_char.md)
   The `UNICHAR` function in Excel returns the Unicode character that corresponds to the given numeric value.

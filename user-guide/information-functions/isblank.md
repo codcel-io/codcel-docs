@@ -135,7 +135,7 @@ Returns the number of blank cells in the range A1:A10
 - `ISBLANK` only returns `TRUE` for cells that are genuinely empty (no content at all).
 - When applied to a literal value (e.g., `ISBLANK(0)` or `ISBLANK("")`), it always returns `FALSE`.
 - For checking if a cell's displayed value appears empty (including empty strings), consider using `LEN(TRIM(A1))=0` instead.
-- `ISBLANK` is part of the IS family of information functions (`ISBLANK`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, [`ISLOGICAL`](./islogical.md), etc.).
+- `ISBLANK` is part of the IS family of information functions (`ISBLANK`, [`ISERR`](./iserr.md), [`ISERROR`](./iserror.md), [`ISEVEN`](./iseven.md), [`ISLOGICAL`](./islogical.md), [`ISNA`](./isna.md), [`ISNONTEXT`](./isnontext.md), [`ISNUMBER`](../mathematical-functions/is_number.md), [`ISODD`](./isodd.md), [`ISTEXT`](./istext.md), etc.).
 
 ## Applications:
 
@@ -148,8 +148,8 @@ Returns the number of blank cells in the range A1:A10
 ## Related Functions:
 
 - **ISOMITTED**: Checks whether an argument was omitted in a LAMBDA function (different from checking if a cell is blank).
-- **ISNUMBER**: Returns TRUE if the value is a number.
-- **ISTEXT**: Returns TRUE if the value is text.
+- **[ISNUMBER](../mathematical-functions/is_number.md)**: Returns TRUE if the value is a number.
+- **[ISTEXT](./istext.md)**: Returns TRUE if the value is text.
 - **ISERROR**: Returns TRUE if the value is any error.
 - **ISNA**: Returns TRUE if the value is the #N/A error.
 - **TYPE**: Returns a numeric code indicating the data type of a value.

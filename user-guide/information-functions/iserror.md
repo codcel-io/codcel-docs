@@ -132,7 +132,7 @@ Returns the number of cells in A1:A10 that contain any error
 - `ISERROR` catches **all** error types, including `#N/A`. If you want to exclude `#N/A` from detection, use `ISERR` instead.
 - If you only want to detect `#N/A` errors, use `ISNA`.
 - For simpler error handling, consider `IFERROR` (handles all errors in a single function) or `IFNA` (handles only `#N/A`).
-- `ISERROR` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, [`ISLOGICAL`](./islogical.md), etc.).
+- `ISERROR` is part of the IS family of information functions ([`ISBLANK`](./isblank.md), [`ISERR`](./iserr.md), `ISERROR`, [`ISEVEN`](./iseven.md), [`ISLOGICAL`](./islogical.md), [`ISNA`](./isna.md), [`ISNONTEXT`](./isnontext.md), [`ISNUMBER`](../mathematical-functions/is_number.md), [`ISODD`](./isodd.md), [`ISTEXT`](./istext.md), etc.).
 - When used with `IF`, `ISERROR` evaluates the expression twice (once for the test and once for the result). `IFERROR` is more efficient as it evaluates only once.
 - `ISERROR` returns `FALSE` for blank cells, since a blank cell is not an error.
 
@@ -152,8 +152,8 @@ Returns the number of cells in A1:A10 that contain any error
 - **[IFERROR](../conditional-functions/if_error.md)**: Returns a specified value if a formula evaluates to any error; otherwise returns the formula result.
 - **[IFNA](../logical-functions/ifna.md)**: Returns a specified value if a formula evaluates to `#N/A`; otherwise returns the formula result.
 - **[ISBLANK](./isblank.md)**: Returns TRUE if the cell is empty.
-- **ISNUMBER**: Returns TRUE if the value is a number.
-- **ISTEXT**: Returns TRUE if the value is text.
+- **[ISNUMBER](../mathematical-functions/is_number.md)**: Returns TRUE if the value is a number.
+- **[ISTEXT](./istext.md)**: Returns TRUE if the value is text.
 - **[TYPE](./type.md)**: Returns a numeric code indicating the data type of a value.
 
 > **Tip:** In modern Excel, `IFERROR` is generally preferred over `IF(ISERROR(...), ...)` because it is more concise and more efficient — it evaluates the expression only once. However, `ISERROR` remains useful when you need to use the error check result in more complex logical expressions, or when combining with other IS functions to distinguish between different error types.

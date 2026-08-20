@@ -72,7 +72,7 @@ The core formula engine that implements Excel-compatible calculations. It suppor
 
 Generated code depends on this engine at runtime. The engine handles:
 
-- Function evaluation (500+ Excel functions)
+- Function evaluation (497 Excel functions)
 - Type conversions between numbers, text, booleans, dates, and errors
 - Excel-compatible rounding and precision
 - Array and matrix operations

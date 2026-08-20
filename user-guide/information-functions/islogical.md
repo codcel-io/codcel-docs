@@ -132,7 +132,7 @@ Returns the number of cells in A1:A10 that hold a logical value
 
 - `ISLOGICAL` distinguishes types, it does not convert them. `ISLOGICAL(1)` is `FALSE` even though `IF(1, ...)` treats `1` as `TRUE`.
 - Comparison operators (`=`, `<>`, `>`, `<`, `>=`, `<=`) always produce logical values, so `ISLOGICAL` applied to a comparison is always `TRUE`.
-- `ISLOGICAL` is part of the IS family of information functions (`ISBLANK`, `ISERR`, `ISERROR`, `ISNA`, `ISNUMBER`, `ISTEXT`, `ISLOGICAL`, etc.).
+- `ISLOGICAL` is part of the IS family of information functions ([`ISBLANK`](./isblank.md), [`ISERR`](./iserr.md), [`ISERROR`](./iserror.md), [`ISEVEN`](./iseven.md), `ISLOGICAL`, [`ISNA`](./isna.md), [`ISNONTEXT`](./isnontext.md), [`ISNUMBER`](../mathematical-functions/is_number.md), [`ISODD`](./isodd.md), [`ISTEXT`](./istext.md), etc.).
 - `TYPE` returns `4` for exactly the values that `ISLOGICAL` returns `TRUE` for, so `ISLOGICAL(A1)` and `TYPE(A1)=4` are equivalent.
 - When applied to a range, `ISLOGICAL` evaluates each cell individually and returns an array of results.
 
@@ -150,8 +150,8 @@ Returns the number of cells in A1:A10 that hold a logical value
 - **[ISBLANK](./isblank.md)**: Returns TRUE if the cell is empty.
 - **[ISERROR](./iserror.md)**: Returns TRUE if the value is any error.
 - **[ISNA](./isna.md)**: Returns TRUE only if the value is the `#N/A` error.
-- **ISNUMBER**: Returns TRUE if the value is a number.
-- **ISTEXT**: Returns TRUE if the value is text.
+- **[ISNUMBER](../mathematical-functions/is_number.md)**: Returns TRUE if the value is a number.
+- **[ISTEXT](./istext.md)**: Returns TRUE if the value is text.
 - **[N](./n.md)**: Converts a value to a number — logical `TRUE` becomes `1` and `FALSE` becomes `0`.
 
 > **Tip:** Spreadsheets often accumulate a mix of real Booleans, the numbers `1`/`0`, and the text `"TRUE"`/`"FALSE"` in the same column, because each of the three looks identical once formatted. `ISLOGICAL` is the quickest way to find the odd ones out before they cause a subtle logic bug downstream.

@@ -8,16 +8,17 @@ See LICENSE in the project root.
 
 ## NORMSINV Function
 
-The `NORMSINV` function in Excel is used to calculate the **inverse of the standard normal cumulative distribution**.
-This function returns the value (z-score) associated with a given probability in the standard normal distribution, which
-has a mean of 0 and a standard deviation of 1.
+The `NORMSINV` function in Excel is used to **calculate the inverse of the standard normal cumulative distribution** for
+a given probability. It determines the z-score (standardized value) such that the cumulative standard normal
+distribution equals the given probability.
 
 ### Key Features of NORMSINV:
 
-- Computes the z-value corresponding to a specified cumulative probability for the standard normal distribution.
-- Useful for statistical analyses, hypothesis testing, or any scenario where you need to transform a probability back
-  into a z-score.
-- The updated equivalent function in modern Excel is `NORM.S.INV`.
+- *Inverse of the standard normal distribution*: It calculates the value in a standard normal distribution that
+  corresponds to a given cumulative probability.
+- Assumes a standard normal distribution with a mean of `0` and a standard deviation of `1`.
+- Frequently used in statistics for z-score calculations, hypothesis testing, and confidence interval estimation.
+- Retained for backward compatibility; the modern equivalent is [`NORM.S.INV`](../statistical-functions/norm__s__inv.md).
 
 ### Syntax:
 
@@ -25,36 +26,84 @@ has a mean of 0 and a standard deviation of 1.
 NORMSINV(probability)
 ```
 
-- **probability**: A probability value between **0 and 1** (non-inclusive), representing the area under the standard
-  normal curve to the left of the desired z-value.
+- **probability**: Required. The cumulative probability for which you want to find the corresponding z-score. This value
+  must be between `0` and `1` (exclusive).
 
-### Example:
+### How It Works:
 
-1. **Finding the z-score for a given probability**  
-   Suppose you want to find the z-score where the cumulative probability is **0.95**:  
-   Formula:  
-   `=NORMSINV(0.95)`  
-   **Result**: The function returns approximately **1.645**, which is the z-score that corresponds to the 95th
-   percentile of the standard normal distribution.
+The `NORMSINV` function works with the **standard normal distribution**, which is a normal distribution with the
+following properties:
+
+- Mean: `0`
+- Standard Deviation: `1`
+
+The function determines the z-score (value along the standard normal curve) such that the cumulative probability up to
+that z-score equals the specified `probability`.
+
+In mathematical terms, it finds the value `z` satisfying:
+
+```plaintext
+P(Z ≤ z) = probability
+```
+
+Where `Z` is a random variable following a standard normal distribution.
+
+### Examples:
+
+1. **Basic Example**:
+   To calculate the z-score where 90% of the values lie below it in a standard normal distribution:
+   ```excel
+   =NORMSINV(0.9)
+   ```
+   Result: `1.281552`.
+
+2. **Find the z-score for a 5% left-tail probability**:
+   If you need a z-score corresponding to the lowest 5% in the standard normal curve:
+   ```excel
+   =NORMSINV(0.05)
+   ```
+   Result: `-1.644854`.
+
+3. **Application in Testing**:
+   When conducting a hypothesis test and you need the z-score for a significance level of 0.025 (two-tailed test):
+   ```excel
+   =NORMSINV(0.975)
+   ```
+   Result: `1.959964`.
+
+4. **Confidence Interval**:
+   For a 99% confidence interval, find z-scores for cumulative probabilities 0.005 and 0.995:
+   ```excel
+   =NORMSINV(0.005)  // Lower z-score
+   =NORMSINV(0.995)  // Upper z-score
+   ```
+   Results: `-2.575829` and `2.575829`.
 
 ### Notes:
 
-- **Output**:
-    - The result is a numerical value (z-score) that can be positive or negative, depending on the input probability.
-    - Higher probabilities produce positive z-scores (to the right of the mean), while lower probabilities produce
-      negative z-scores (to the left of the mean).
-- **Invalid inputs**:
-    - If the `probability` argument is ≤ 0 or ≥ 1, the function returns a `#NUM!` error as these probabilities are
-      invalid for a standard normal distribution.
-- The `NORMSINV` function is equivalent to the `NORM.INV` function when the mean is 0 and standard deviation is 1 (i.e.,
-  the standard normal form).
+- **Input Validation**:
+    - The `probability` must be strictly between `0` and `1`. If it's `0`, `1`, or outside this range, the function
+      returns `#NUM!`.
+    - Non-numeric inputs result in `#VALUE!`.
 
-### Use Cases:
+- **Relationship to NORMINV**:
+    - Unlike the `NORMINV` function, the `NORMSINV` function assumes a standard normal distribution (mean `0`, standard
+      deviation `1`) and does not require additional parameters.
 
-- **Hypothesis Testing**: Determine critical values (z-scores) for a given significance level in hypothesis testing.
-- **Confidence Intervals**: Calculate the z-scores required for constructing confidence intervals.
-- **Probability-Score Conversion**: Convert cumulative probabilities into corresponding values in normal distribution
-  analysis.
+- **Output Behavior**:
+    - Small probabilities (close to `0`) map to large negative z-scores.
+    - Probabilities near `1` map to large positive z-scores.
 
-> **Note**: The `NORMSINV` function is still supported for backward compatibility but has been replaced by the
-`NORM.S.INV` function in modern Excel versions, which provides improved naming consistency.
+### Applications:
+
+- **Statistical Analysis**: Convert probabilities into z-scores for standard normal distributions.
+- **Hypothesis Testing**: Determine critical z-scores for given significance levels.
+- **Confidence Intervals**: Calculate z-scores for confidence levels in sampling or estimation methods.
+- **Finance**: Derive standardized returns or percentiles for risk analysis.
+
+> **Tip**: Use `NORMSINV` when dealing with probabilities in the standard normal distribution. For normal distributions
+> with a different mean or standard deviation, use `NORMINV` or `NORM.INV` in Excel.
+>
+> **Note**: `NORMSINV` is still supported for backward compatibility but has been replaced by
+> [`NORM.S.INV`](../statistical-functions/norm__s__inv.md) in modern Excel versions, which provides improved naming
+> consistency. The two functions are equivalent.

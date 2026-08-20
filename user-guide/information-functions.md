@@ -99,6 +99,19 @@ Checks whether a value is any error, returning TRUE for all error types includin
     - `=IF(ISERROR(A1/B1), "Error", A1/B1)` returns a fallback message for any error
     - `=SUMPRODUCT(--ISERROR(A1:A10))` counts cells containing any error
 
+### [ISEVEN](./information-functions/iseven.md)
+
+Checks whether a number is even, returning TRUE when it divides exactly by two and FALSE when it does not.
+
+- **Purpose:** Tests the parity of a number so that alternating logic, two-way grouping, and pair-count validation can be driven directly from a value.
+- **Formula:** `ISEVEN(number)`
+    - `number` is the value you want to test for evenness.
+- **Example Usage:**
+    - `=ISEVEN(4)` returns `TRUE`
+    - `=ISEVEN(7)` returns `FALSE`
+    - `=ISEVEN(2.5)` returns `TRUE` (decimals are truncated toward zero, so the test runs against `2`)
+    - `=IF(ISEVEN(ROW()), "Shaded", "Plain")` bands alternate rows without a helper column
+
 ### [ISLOGICAL](./information-functions/islogical.md)
 
 Checks whether a value is a logical (Boolean) value, returning TRUE only for `TRUE` and `FALSE` and FALSE for numbers, text, dates, errors, and blanks.
@@ -125,6 +138,32 @@ Checks whether a value is the `#N/A` error specifically, returning TRUE only for
     - `=IF(ISNA(VLOOKUP(A1, D:E, 2, FALSE)), "Not found", VLOOKUP(A1, D:E, 2, FALSE))` substitutes a message only when the lookup misses
     - `=SUMPRODUCT(--ISNA(A1:A10))` counts cells in `A1:A10` that contain `#N/A`
 
+### [ISNONTEXT](./information-functions/isnontext.md)
+
+Checks whether a value is anything other than text, returning TRUE for numbers, logical values, errors, and blank cells.
+
+- **Purpose:** Confirms that a field is free of text contamination before it is used in a calculation, and is the exact negation of `ISTEXT`.
+- **Formula:** `ISNONTEXT(value)`
+    - `value` is the value or expression you want to test.
+- **Example Usage:**
+    - `=ISNONTEXT(42)` returns `TRUE`
+    - `=ISNONTEXT("Hello")` returns `FALSE`
+    - `=ISNONTEXT(A1)` returns `TRUE` if A1 is blank (an empty cell contains no text)
+    - `=ISNONTEXT("")` returns `FALSE` (a zero-length string is still text)
+
+### [ISODD](./information-functions/isodd.md)
+
+Checks whether a number is odd, returning TRUE when it leaves a remainder after division by two and FALSE when it divides exactly.
+
+- **Purpose:** Tests the parity of a number so that alternating logic, two-way grouping, and pair-count validation can be driven directly from a value.
+- **Formula:** `ISODD(number)`
+    - `number` is the value you want to test for oddness.
+- **Example Usage:**
+    - `=ISODD(7)` returns `TRUE`
+    - `=ISODD(4)` returns `FALSE`
+    - `=ISODD(0)` returns `FALSE` (zero divides exactly by two, so it is even)
+    - `=IF(ISODD(COUNTA(A1:A100)), "Unpaired record present", "All paired")` warns when a paired list has an odd count
+
 ### [ISOMITTED](./information-functions/isomitted.md)
 
 Checks whether an argument was omitted in a LAMBDA function, returning TRUE if omitted and FALSE if provided.
@@ -137,6 +176,19 @@ Checks whether an argument was omitted in a LAMBDA function, returning TRUE if o
     - `=LAMBDA(name, greeting, IF(ISOMITTED(greeting), "Hello", greeting) & ", " & name)("Alice")` returns `"Hello, Alice"`
     - `=LAMBDA(val, mult, val * IF(ISOMITTED(mult), 2, mult))(10, 3)` returns `30` (uses provided multiplier)
     - `ISOMITTED` returns `FALSE` for empty strings, zero, and FALSE values — only truly omitted arguments return `TRUE`
+
+### [ISTEXT](./information-functions/istext.md)
+
+Checks whether a value is text, returning TRUE for text strings and FALSE for numbers, logical values, errors, and blank cells.
+
+- **Purpose:** Detects values stored as text — most often numbers that arrived as text during an import and will not sum correctly until converted.
+- **Formula:** `ISTEXT(value)`
+    - `value` is the value or expression you want to test.
+- **Example Usage:**
+    - `=ISTEXT("Hello")` returns `TRUE`
+    - `=ISTEXT(42)` returns `FALSE`
+    - `=ISTEXT(A1)` returns `TRUE` if A1 holds the text `"42"` rather than the number
+    - `=SUMPRODUCT(--ISTEXT(A1:A10))` counts how many cells in the range hold text
 
 ## N
 
