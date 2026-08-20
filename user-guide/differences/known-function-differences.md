@@ -47,9 +47,10 @@ These are not calculation errors — the functions are working correctly. Howeve
 The following categories of Excel functions are not implemented:
 
 - **Cube functions** (CUBEVALUE, CUBEMEMBER, etc.) -- these require a connection to an OLAP data source
-- **Database functions** (DAVERAGE, DCOUNT, DSUM, etc.) -- these use Excel's database query syntax
 - **Web functions** (WEBSERVICE, FILTERXML, ENCODEURL) -- these require external HTTP access
 - **Microsoft 365 exclusive functions** (STOCKHISTORY, DETECTLANGUAGE, TRANSLATE) -- these require Microsoft cloud services
+
+Database functions (DAVERAGE, DCOUNT, DSUM, etc.) **are** supported -- see [Database Functions](../database-functions.md).
 
 See the [Alphabetical Function List](../alphabetical-functions.md) for the complete list of supported functions.
 
