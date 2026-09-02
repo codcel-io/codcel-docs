@@ -24,7 +24,12 @@ Non-seasonal forecasting produces results that differ from Excel by approximatel
 
 ### TEXT
 
-The TEXT function supports common format strings but may not handle every custom format pattern that Excel accepts. Standard number, date, and currency formats work correctly.
+The TEXT function supports common format strings but may not handle every custom format pattern that Excel accepts. Standard number, date, and currency formats work correctly, including localized month and weekday names, locale number symbols, and `[$SYMBOL-LCID]` currency prefixes — see [TEXT](../text-functions/text.md).
+
+Two known gaps remain:
+
+- **Colour codes are parsed and discarded.** `[Red]#,##0.00` formats the number correctly but the colour has nowhere to go, since `TEXT` returns a string rather than a styled cell.
+- **Grouping is always by three digits.** Locales that group by lakh — CLDR gives Hindi `#,##,##0.00` — are rendered with uniform three-digit groups.
 
 ### TOCOL / TOROW
 

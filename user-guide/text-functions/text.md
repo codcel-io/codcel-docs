@@ -54,6 +54,21 @@ especially useful for custom formatting of numeric and date/time values in dashb
   `hh` for hours.
 - The difference between `TEXT` and native formatting (e.g., cell styles) is that `TEXT` embeds the formatted value into
   formulas and outputs it explicitly as text.
-- This function does not adjust for localization automatically—ensure the format aligns with your region's standards if
-  needed.
+- `TEXT` **is** locale-aware. `mmmm` and `dddd` return month and weekday names in
+  the project's language, `AM/PM` returns the locale's markers, and the decimal,
+  thousands, percent, exponent and time separators come from the locale.
+
+  | Locale | `=TEXT(DATE(2023,5,15), "mmmm d, yyyy")` | `=TEXT(0.1234, "0.00%")` |
+  |--------|------------------------------------------|--------------------------|
+  | `en-US` | `May 15, 2023` | `12.34%` |
+  | `de-DE` | `Mai 15, 2023` | `12,34%` |
+  | `fr-FR` | `mai 15, 2023` | `12,34%` |
+  | `ja-JP` | `5月 15, 2023` | `12.34%` |
+
+- Format codes are read in the project's language, because that is how Excel
+  writes them. A German workbook carries `"jjjj-mm-tt"` where an English one
+  carries `"yyyy-mm-dd"`, and a comma-decimal locale writes `"#.##0,00"` where an
+  English one writes `"#,##0.00"`. Both forms are understood.
+- Currency prefixes such as `[$€-407]` and `[$$-409]` are honoured; the trailing
+  hex locale id is ignored, since the locale is already known.
 - Combine `TEXT` with other functions, such as `CONCAT`, `IF`, or `VALUE`, for dynamic formatting in complex workflows.

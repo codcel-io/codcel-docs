@@ -41,10 +41,32 @@ codcel -e spreadsheet.xlsx -p my-project -g ./generated --table-path ./tables
 
 | Argument | Short | Default | Description |
 |----------|-------|---------|-------------|
+| `--locale` | | | Locale tag such as `de-DE`. Fills in the four settings below in one go |
 | `--decimal-separator` | `-d` | `.` | Decimal separator character |
-| `--currency-symbol` | `-c` | `$` | Currency symbol |
+| `--currency-symbol` | `-c` | `$` | Currency symbol. Where it sits relative to the amount comes from the locale, not from here |
 | `--thousands-separator` | `-t` | `,` | Thousands separator character |
 | `--language` | | `en` | Formatting language code |
+| `--timezone` | | | IANA timezone for `NOW` and `TODAY`, e.g. `Europe/Berlin`. Empty means the host's local zone at run time |
+
+`--locale` is the quickest way to get a consistent set:
+
+```bash
+codcel -e model.xlsx -p my-project --locale de-DE
+```
+
+That yields `,` decimal, `.` thousands, `€`, language `de` and region `DE`. The
+four individual flags still override it **where they were given a non-default
+value**, so `--locale de-DE --currency-symbol CHF` is German conventions with a
+Swiss franc.
+
+The corollary is that an individual flag cannot force a value that happens to
+equal its own default: `--locale de-DE --decimal-separator .` still yields `,`,
+because a flag left at its default is indistinguishable from one that was never
+passed. Use `--locale en` and set the others explicitly if that is what you want.
+
+`--timezone` is deliberately **not** derived from `--locale`. A locale is not a
+timezone: the United States spans six zones under `en-US`, and Spain and the
+Canaries share `es-ES` an hour apart.
 
 ### Type Handling
 
@@ -73,7 +95,18 @@ Parquet files are self-describing, so no header or delimiter settings are needed
 
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `--allow-lotus-1-2-3-1900-date-bug` | `true` | Replicate Excel's 1900 leap year bug |
+| `--allow-lotus-1-2-3-1900-date-bug` | follows the workbook setting | Replicate Excel's 1900 leap year bug in the *generated project* |
+| `--workbook-lotus-1-2-3-1900-date-bug` | `true` | Replicate the bug when *decoding* serials read out of the workbook |
+| `--date-system` | `auto` | Serial epoch of the source workbook: `auto`, `1900` or `1904` |
+
+Both bug flags accept a bare form and an explicit value, so either of these works:
+
+```bash
+--allow-lotus-1-2-3-1900-date-bug          # same as =true
+--allow-lotus-1-2-3-1900-date-bug=false
+```
+
+Leave `--workbook-lotus-1-2-3-1900-date-bug` enabled: it is the only convention that agrees with Excel about which day a stored serial denotes. Setting the two flags to different values emits warning `T29` — see [Date Handling](./differences/date-handling.md) for what that costs.
 
 ### Iterative Calculation
 
@@ -308,6 +341,8 @@ The CLI arguments correspond to settings in `codcel.toml`. The desktop app reads
 
 | CLI Argument | codcel.toml Setting |
 |-------------|---------------------|
+| `--locale` | `formatting.locale` |
+| `--timezone` | `formatting.timezone` |
 | `--decimal-separator` | `formatting.decimal_separator` |
 | `--currency-symbol` | `formatting.currency_symbol` |
 | `--thousands-separator` | `formatting.thousands_separator` |
@@ -316,6 +351,8 @@ The CLI arguments correspond to settings in `codcel.toml`. The desktop app reads
 | `--csv-delimiter` | `formatting.csv_delimiter` |
 | `--use-excel-rounding` | `formatting.use_excel_rounding` |
 | `--allow-lotus-1-2-3-1900-date-bug` | `formatting.allow_lotus_1_2_3_1900_date_bug` |
+| `--workbook-lotus-1-2-3-1900-date-bug` | `formatting.workbook_lotus_1_2_3_1900_date_bug` |
+| `--date-system` | `formatting.date_system` |
 | `--enable-iterative-calculation` | `formatting.allow_circular_references` |
 | `--maximum-iterations` | `formatting.circular_max_iterations` |
 | `--maximum-change` | `formatting.circular_convergence_threshold` |

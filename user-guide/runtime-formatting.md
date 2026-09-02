@@ -18,11 +18,22 @@ At runtime, the generated code can also detect and apply locale-appropriate form
 
 Runtime formatting uses a three-tier resolution order. Each tier can override the one before it:
 
-1. **OS locale detection** -- the generated code detects the operating system's locale at startup and applies appropriate formatting (decimal separator, currency symbol, thousands separator, language)
+1. **OS locale detection** -- the generated code detects the operating system's locale at startup and applies appropriate formatting (decimal separator, currency symbol, thousands separator, language, region)
 2. **Environment variable overrides** -- `CODCEL_*` environment variables override individual formatting fields
 3. **Per-call override** -- API variants accept a language tag (e.g. `"de"`, `"fr-FR"`) to override formatting for a single calculation call
 
 The final formatting used for a calculation is determined by whichever tier provides the most specific value.
+
+### What the language and region each decide
+
+The two subtags of a tag like `en-GB` govern different things, and Codcel keeps them in separate fields for that reason.
+
+- The **language** decides names: month and weekday names for `TEXT(date, "mmmm")` and `"dddd"`, AM/PM markers, and the error values a localised deployment shows.
+- The **region** decides conventions: the decimal and thousands separators, the currency symbol, and which built-in date format Excel means. Excel renders the same built-in short date as `dd/mm/yyyy` for `en-GB` and `m/d/yy` for `en-US`.
+
+So `en-DE` -- an English speaker working in Germany -- gets English month names with German number separators, which is what Excel does.
+
+Names, symbols and calendar data come from [Unicode CLDR](https://cldr.unicode.org/). The three settings you can override -- decimal separator, thousands separator and currency symbol -- are Codcel's own and always win over the CLDR values.
 
 ---
 
@@ -36,8 +47,11 @@ The following environment variables override formatting at runtime. They take ef
 | `CODCEL_CURRENCY_SYMBOL` | Currency symbol | `€` |
 | `CODCEL_THOUSANDS_SEPARATOR` | Thousands grouping character | `.` |
 | `CODCEL_USE_EXCEL_ROUNDING` | Use Excel's 15-digit rounding (`true`/`false`) | `true` |
-| `CODCEL_LANGUAGE` | Language code for locale detection | `de` |
-| `CODCEL_ALLOW_LOTUS_1_2_3_1900_DATE_BUG` | Replicate Excel's 1900 date bug (`true`/`false`) | `true` |
+| `CODCEL_LANGUAGE` | Language tag for locale detection. A full tag sets the region too | `de` or `en-GB` |
+| `CODCEL_REGION` | Region subtag on its own, when the language is set separately | `CH` |
+| `CODCEL_TIMEZONE` | IANA timezone for `NOW` and `TODAY`. Unset means the host's local zone | `Europe/Berlin` |
+| `CODCEL_MOCK_NOW` | Freeze the clock at a fixed RFC 3339 instant, for tests. An unparseable value is ignored | `2024-12-03T18:00:00Z` |
+| `CODCEL_ALLOW_LOTUS_1_2_3_1900_DATE_BUG` | Replicate Excel's 1900 date bug (`true`/`false`). Disabling this re-bases the serial system rather than correcting dates — see [Date Handling](./differences/date-handling.md) | `true` |
 | `CODCEL_USE_PORTABLE_MATH` | Use portable pure-Rust math for cross-platform determinism (`true`/`false`) | `false` |
 
 ### Example
@@ -271,3 +285,49 @@ The formatting settings in `codcel.toml` and the CLI (`--decimal-separator`, `--
 | Per-call formatting (libraries) | `_with_language` / `_with_format` API variants |
 
 See [Settings Reference](./settings.md) for build-time formatting configuration.
+
+---
+
+## Timezones: `NOW` and `TODAY`
+
+`NOW()` and `TODAY()` read the **local wall clock**, as Excel does. A spreadsheet opened in Auckland at nine in the morning shows that day's date, and so does the same spreadsheet opened in Los Angeles at nine in the morning thirteen hours later. Excel has no timezone concept at all -- a date serial is a zoneless wall-clock reading.
+
+By default the generated code reads the host machine's zone. Set `CODCEL_TIMEZONE` (or `--timezone` at transpile time) to pin a specific IANA zone instead:
+
+```bash
+CODCEL_TIMEZONE="Europe/Berlin" ./my-project-server
+```
+
+!!! warning "This changed in engine 0.1.10"
+    Earlier versions returned UTC from both functions. For a caller at UTC+13 that is yesterday's date for thirteen hours of every day, and for one at UTC-8 it rolls over to tomorrow eight hours early. If a deployment was relying on the UTC behaviour, set `CODCEL_TIMEZONE="UTC"` to keep it.
+
+### Freezing the clock in tests
+
+A workbook containing a `TODAY()` or `NOW()` cell generates a test asserting the value from the day the workbook was saved, so it only passes on that date. Set `CODCEL_MOCK_NOW` to the save date and the test becomes deterministic:
+
+```bash
+CODCEL_MOCK_NOW="2024-12-03T18:00:00Z" cargo test --release
+```
+
+The value must be RFC 3339 including an offset -- `2024-12-03T18:00:00Z`, not `2024-12-03T18:00:00`. An unparseable value is ignored and the real clock is used, so a stray variable cannot take a calculation down.
+
+---
+
+## WebAssembly builds
+
+Generated wasm crates are built with the calculation engine's `named-timezones` feature **off**. That feature embeds the IANA timezone database, which costs roughly 890 KB of the wasm bundle once anything reaches for it.
+
+Turning it off does not make `NOW` and `TODAY` return UTC -- they still read the browser's local clock. It only removes the ability to pin an explicitly named zone through `CODCEL_TIMEZONE`, which a browser has no business overriding anyway.
+
+The CLDR locale table adds about 82 KB and is kept on, since it is what localised formatting needs.
+
+---
+
+## Web clients
+
+Every generated REST server derives a per-request format from the `Accept-Language` header, and every generated web client now sends one:
+
+- The **TypeScript** and **JavaScript** clients send `navigator.language`, so a German visitor sees `1.234,56` where an American sees `1,234.56`.
+- The **Python, Go, Java, Kotlin, C# and Rust** clients send `CODCEL_LANGUAGE` when it is set. These usually run on a server, whose own locale says nothing about who the answer is for, so nothing is sent unless you ask for it.
+
+With no header, the server falls back to the locale the project was transpiled with.
