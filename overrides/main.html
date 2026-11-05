@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% if config.extra.cf_beacon_token %}
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon='{"token": "{{ config.extra.cf_beacon_token }}"}'></script>
+  {% endif %}
+{% endblock %}
+
+{% block announce %}
+  Turn your own spreadsheet into code —
+  <a href="https://codcel.io/en/download"><strong>download Codcel free</strong></a>
+  or <a href="https://codcel.io/en/excel-to">pick your language</a>.
+{% endblock %}

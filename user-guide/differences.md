@@ -1,3 +1,7 @@
+---
+description: "Where results from Codcel-generated code can differ from Excel, and how to avoid rounding, type and date pitfalls."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

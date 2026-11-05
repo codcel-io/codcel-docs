@@ -1,3 +1,7 @@
+---
+description: "Codcel annotation reference: mark Excel cells as inputs, outputs and tables with *I*, *O* and *T* markers."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

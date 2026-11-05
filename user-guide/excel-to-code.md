@@ -1,3 +1,7 @@
+---
+description: "Step-by-step guide to converting an Excel spreadsheet into a generated software project with the Codcel Desktop app."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

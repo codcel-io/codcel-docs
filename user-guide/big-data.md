@@ -1,3 +1,7 @@
+---
+description: "Run Excel models on datasets from thousands to billions of rows with Codcel's tiered tables, Parquet and Apache DataFusion."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

@@ -1,3 +1,7 @@
+---
+description: "What Codcel is, how it turns Excel workbooks into source code, and how to get started with the desktop app."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

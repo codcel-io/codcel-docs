@@ -1,3 +1,7 @@
+---
+description: "Official Codcel documentation: convert Excel spreadsheets into production-ready Rust, Python, Java, C#, Go, Swift and Kotlin code, APIs and apps."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

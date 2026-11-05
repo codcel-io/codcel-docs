@@ -1,3 +1,7 @@
+---
+description: "Alphabetical list of every Excel function supported by Codcel, with links to details and examples."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

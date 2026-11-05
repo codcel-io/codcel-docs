@@ -1,5 +1,5 @@
 site_name: Codcel Documentation
-site_url: https://codcel-io.github.io/codcel-docs/
+site_url: https://docs.codcel.io/
 site_description: >
   Official documentation for Codcel — convert Excel spreadsheets to production-ready code
 site_author: Codcel
@@ -9,13 +9,14 @@ repo_name: codcel-io/codcel-docs
 edit_uri: edit/main/user-guide/
 
 copyright: >
-  Copyright &copy; 2026 Codcel —
+  Copyright &copy; 2026 <a href="https://codcel.io/en">Codcel</a> —
   <a href="https://github.com/codcel-io/codcel-docs/blob/main/LICENSE">CC BY 4.0</a>
 
 docs_dir: user-guide
 
 theme:
   name: material
+  custom_dir: overrides
   logo: assets/codcel-logo-lockup-dark.svg
   favicon: assets/codcel-logo-lockup.svg
   palette:
@@ -56,9 +57,20 @@ markdown_extensions:
       permalink: true
 
 extra:
+  # Cloudflare Web Analytics (cookieless). Empty → no beacon. Set the
+  # CF_BEACON_TOKEN repository variable; see .github/workflows/docs.yml.
+  cf_beacon_token: !ENV [CF_BEACON_TOKEN, ""]
   social:
+    - icon: material/web
+      link: https://codcel.io/en
+      name: Codcel website
+    - icon: material/download
+      link: https://codcel.io/en/download
+      name: Download Codcel
     - icon: fontawesome/brands/github
       link: https://github.com/codcel-io
+    - icon: fontawesome/brands/youtube
+      link: https://youtube.com/@codcel
 
 extra_css:
   - assets/extra.css

@@ -1,3 +1,7 @@
+---
+description: "How Codcel handles Excel tables: small, large and massive tables, and PostgreSQL-backed CRUD tables."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

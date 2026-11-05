@@ -28,6 +28,9 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: mkdocs build --strict
+        env:
+          # Optional: Cloudflare Web Analytics token (Settings → Variables → Actions)
+          CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

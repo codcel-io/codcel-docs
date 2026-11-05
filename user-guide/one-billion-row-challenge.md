@@ -1,3 +1,7 @@
+---
+description: "The One Billion Row Challenge with Codcel: a 12 GB CSV, an Excel workbook and a generated Rust REST server."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

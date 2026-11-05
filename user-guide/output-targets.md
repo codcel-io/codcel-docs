@@ -1,3 +1,7 @@
+---
+description: "Every output Codcel can generate from Excel: calculation libraries, REST servers, web clients, full UIs, WASM, CLI and MCP servers."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0

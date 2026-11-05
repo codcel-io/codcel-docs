@@ -1,3 +1,7 @@
+---
+description: "How Codcel generates tests that compare the generated code's results with your Excel workbook's values."
+---
+
 <!--
 SPDX-FileCopyrightText: Copyright (c) 2026 Codcel
 SPDX-License-Identifier: CC-BY-4.0
