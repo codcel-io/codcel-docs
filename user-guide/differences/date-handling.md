@@ -79,7 +79,7 @@ Excel supports a second epoch, originally the default on Mac Excel and still sel
 
 Codcel reads the workbook's `date1904` flag and **rebases every serial onto the 1900 system as the file is loaded**. A 1904 workbook and its 1900 equivalent therefore produce identical dates in the generated project.
 
-This covers `T_` table sheets as well as calculation sheets. A table sheet is read twice — once into the model and once into the Parquet or CSV file your generated code queries at runtime — and both copies are rebased, so a date lookup against a table matches the same row either way. The `codcel-tests/date-1900.xlsx` and `codcel-tests/date-1904.xlsx` fixture pair exists to hold that property: the two files describe the same days in the two epochs and must load identically, tables included.
+This covers `T_` table sheets as well as calculation sheets. A table sheet is read twice — once into the model and once into the Parquet or CSV file your generated code queries at runtime — and both copies are rebased, so a date lookup against a table matches the same row either way. A fixture pair of two workbooks describing the same days in the two epochs exists to hold that property: both must load identically, tables included.
 
 When a 1904 workbook is detected, Codcel emits informational message **L33** so the conversion is never silent.
 
