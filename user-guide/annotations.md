@@ -151,6 +151,16 @@ You can create a single output that returns multiple values by listing cell refe
 
 This creates a single output called `loan_summary` that returns the values from cells B1, C1, and D1 together.
 
+A range works the same way, and can be combined with single cells:
+
+| Annotation | Returns |
+|---|---|
+| `*O*B1:B100*Projection` | the 100 cells B1 to B100 |
+| `*O*Results!G47:G146*DeathBenefit` | G47 to G146 on the Results sheet |
+| `*O*A1:A3;C5*Mixed` | A1, A2, A3 and C5 |
+
+The cells do not need their own `*O*` annotation. A cell that has one is also generated as its own output; a cell that does not is calculated only as part of the combined output.
+
 Use combined outputs when you want a single function or endpoint to return a group of related values.
 
 ---
@@ -224,7 +234,10 @@ Annotation cells can be placed **anywhere** in your workbook -- they do not need
 |---------------|--------|---------|
 | Same-sheet cell | `CellAddress` | `B2` |
 | Cross-sheet cell | `SheetName!CellAddress` | `Sheet2!B2` |
+| Cross-sheet range | `SheetName!Start:End` | `Sheet2!B2:B10` |
 | Table range | `SheetName!Start:SheetName!End` | `Persons!A1:Persons!E4` |
+
+A sheet name with spaces or other characters can be written as it appears on the tab (`BI Output!H13`) or quoted the way Excel writes it in formulas (`'BI Output'!H13`). Sheet names are matched ignoring case.
 
 ### Cross-Sheet References
 
@@ -239,7 +252,7 @@ Annotations on one sheet can reference cells on a different sheet:
 ---- SHEET: Codcel ----
 ```
 
-This places the annotations on the "Codcel" sheet while the actual input and output cells live on the "Calculations" sheet.
+This places the annotations on the "Codcel" sheet while the actual input and output cells live on the "Calculations" sheet. Codcel warns (L13) when an annotation names a sheet that does not exist.
 
 ---
 

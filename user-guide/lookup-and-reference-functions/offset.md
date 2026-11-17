@@ -27,8 +27,8 @@ OFFSET(reference, rows, cols, [height], [width])
 - **reference**: The starting point from which the offset is applied. This must be a cell or range of adjacent cells.
 - **rows**: The number of rows to move from the reference. Positive values move down, negative values move up.
 - **cols**: The number of columns to move from the reference. Positive values move right, negative values move left.
-- **height** (optional): The number of rows in the returned reference. Must be a positive number. Defaults to the height of the original reference.
-- **width** (optional): The number of columns in the returned reference. Must be a positive number. Defaults to the width of the original reference.
+- **height** (optional): The number of rows in the returned reference. A negative height extends the range upwards from the new starting cell. Defaults to the height of the original reference.
+- **width** (optional): The number of columns in the returned reference. A negative width extends the range to the left. Defaults to the width of the original reference.
 
 ## How `OFFSET` Works:
 
@@ -57,10 +57,10 @@ A     B     C     D
 
 **Result:**
 ```
-80
+120
 ```
 
-Explanation: Starting from A1, move 2 rows down and 3 columns right to reach D3, which contains 80.
+Explanation: Starting from A1, move 2 rows down and 3 columns right to reach D3, which contains 120.
 
 ### 2. Offset with Height and Width:
 
@@ -70,14 +70,10 @@ Explanation: Starting from A1, move 2 rows down and 3 columns right to reach D3,
 
 **Result:**
 ```
-480
-```
-
-Explanation: Starting from A1, move 1 row down (to A2), then create a 3-row by 2-column range (A2:B4). SUM adds: 50 + 60 + 90 + 100 + 130 + 140 = 570. Wait — let me recalculate: 50 + 60 + 90 + 100 + 130 + 140 = 570.
-
-```
 570
 ```
+
+Explanation: Starting from A1, move 1 row down (to A2), then create a 3-row by 2-column range (A2:B4). SUM adds: 50 + 60 + 90 + 100 + 130 + 140 = 570.
 
 ### 3. Negative Row Offset:
 
@@ -87,14 +83,10 @@ Explanation: Starting from A1, move 1 row down (to A2), then create a 3-row by 2
 
 **Result:**
 ```
-10
-```
-
-Explanation: Starting from C3, move 1 row up and 2 columns left to reach A2, which contains 50. Actually — C3 is row 3, column C. Moving up 1 row goes to row 2 (C2), moving left 2 columns goes to column A (A2), which contains 50.
-
-```
 50
 ```
+
+Explanation: Starting from C3, move 1 row up (to C2) and 2 columns left to reach A2, which contains 50.
 
 ### 4. Dynamic SUM with OFFSET:
 
@@ -160,11 +152,18 @@ Returns the sum of a 2x2 block starting 1 row below and 1 column right of B2 (i.
 ## Notes:
 
 - If the offset reference goes outside the boundaries of the worksheet, `OFFSET` returns a `#REF!` error.
-- `height` and `width` must be positive numbers. Zero or negative values return a `#REF!` error.
+- A `height` or `width` of zero returns a `#REF!` error. Negative values extend the range upwards or to the left, so `OFFSET(A5, 0, 0, -3)` refers to A3:A5.
 - `OFFSET` is a **volatile function** — Excel recalculates it every time the worksheet recalculates, even if none of its inputs have changed. This can affect performance in large workbooks.
 - The `rows` and `cols` arguments can be zero, in which case no movement occurs in that direction.
 - `OFFSET` does not physically move cells — it only returns a reference to a different location.
 - When used alone in a cell, `OFFSET` returns the value at the offset position. When used inside functions like SUM or AVERAGE, it passes the range reference.
+
+## In Codcel:
+
+- An `OFFSET` whose arguments are all constants is resolved once, during transpilation, into a fixed reference.
+- When the rows or height come from a calculation, Codcel looks the cell up in the generated code at run time. This works for a single column, such as `OFFSET(AE20, -AK20, 0)` or `SUM(OFFSET(F9, 0, 0, -AK9))`, and the referenced cells may themselves be formulas.
+- A range that ends in an `OFFSET` of its own start cell, such as `SUM(F9:OFFSET(F9, 0, 0, AK9))`, is supported in the same way.
+- Moving above row 1 returns `#REF!`, as in Excel.
 
 ## Applications:
 

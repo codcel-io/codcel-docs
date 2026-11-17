@@ -34,7 +34,7 @@ Before importing, ensure your Excel file follows the [Excel Guidelines](./codcel
 
 - Remove external links, comments, and embedded objects
 - Delete unnecessary hidden sheets
-- Ensure sheet names are unique and contain no special characters
+- Ensure sheet names are unique
 - Save as `.xlsx` for best compatibility
 - Annotate your inputs and outputs using [Codcel annotation syntax](./annotations.md)
 

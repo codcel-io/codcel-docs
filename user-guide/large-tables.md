@@ -35,3 +35,7 @@ The following [VLOOKUP](./table-functions/vlookup.md):
 will return the value "Lisbon".
 
 > **Note:** In this example the **table array** range in the **VLOOKUP** of **A1:D4** will be ignored. The whole table is always used.
+
+Because the whole table is always used, a whole-column range such as `T_Addresses!A:D` is a convenient way to write the lookup: Excel then also sees every row, however long the table grows.
+
+Each column keeps its Excel type. A column of text cells stays text even when the values look like numbers (for example product codes such as `25510100`), so, as in Excel, looking it up with a number does not match; look it up with text.

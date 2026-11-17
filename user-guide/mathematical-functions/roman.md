@@ -10,7 +10,7 @@ See LICENSE in the project root.
 
     ROMAN(number, [form])
 
-- **number**: The Arabic number you want to convert to Roman numerals. It must be a positive integer between 1 and 3999.
+- **number**: The Arabic number you want to convert to Roman numerals: an integer between 0 and 3999. `ROMAN(0)` returns empty text.
 - **form** *(optional)*: A number between 0 and 4 that specifies the type of Roman numeral formatting.
     - `0` or omitted: Classic Roman numerals (e.g., IV for 4, IX for 9).
     - `1` to `4`: Progressive simplification of the numeral format.
@@ -29,4 +29,4 @@ See LICENSE in the project root.
 
 5. `=ROMAN(499, 4)` would return `ID` as the most simplified representation of 499.
 
-> **Note**: If the input number is outside the valid range (1 to 3999), the `ROMAN` function will return a `#VALUE!` error.
+> **Note**: If the input number is negative or greater than 3999, the `ROMAN` function will return a `#VALUE!` error. `ROMAN(0)` returns empty text.
