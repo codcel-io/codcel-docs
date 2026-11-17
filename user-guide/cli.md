@@ -121,6 +121,7 @@ Leave `--workbook-lotus-1-2-3-1900-date-bug` enabled: it is the only convention 
 | Argument | Default | Description |
 |----------|---------|-------------|
 | `--large-array-threshold` | `100` | Row count above which array constants are externalised to separate files (prevents slow compilation) |
+| `--generate-cell-outputs` | `false` | Give each cell of a combined output (`*O*B1:B100*Name` or `*O*A1;C5*Name`) its own Rust function and tests. Off, the cells are calculated and tested only as part of the combined output. Other languages always get just the combined output |
 | `--templates` | *(empty)* | Path to the template directory. Only required when Codcel is built without the `embedded-templates` feature |
 
 ### Inputs & Outputs
@@ -356,6 +357,7 @@ The CLI arguments correspond to settings in `codcel.toml`. The desktop app reads
 | `--enable-iterative-calculation` | `formatting.allow_circular_references` |
 | `--maximum-iterations` | `formatting.circular_max_iterations` |
 | `--maximum-change` | `formatting.circular_convergence_threshold` |
+| `--generate-cell-outputs` | `formatting.generate_cell_outputs` |
 
 Input and output selections are the exception: they are stored in a separate `codcel-io.toml`
 sidecar file rather than in `codcel.toml`. The CLI reads it via `--io-config`, and the desktop

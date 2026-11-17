@@ -161,6 +161,8 @@ A range works the same way, and can be combined with single cells:
 
 The cells do not need their own `*O*` annotation. A cell that has one is also generated as its own output; a cell that does not is calculated only as part of the combined output.
 
+To give every cell of a combined output its own Rust function and tests as well, pass `--generate-cell-outputs` (desktop: **Settings → Generate an output for every cell of a range output**). It is off by default: a 100-row range would otherwise add 100 functions and 200 tests to the Rust calculation crate. Other languages always get just the combined output.
+
 Use combined outputs when you want a single function or endpoint to return a group of related values.
 
 ---
