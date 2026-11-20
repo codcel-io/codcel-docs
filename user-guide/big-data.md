@@ -44,7 +44,7 @@ For massive tables, Codcel uses a pipeline:
 1. **CSV Import** -- your CSV data is read during code generation
 2. **Parquet Conversion** -- data is converted to Apache Parquet, a columnar storage format optimised for analytical queries
 3. **SQL Query Engine** -- at runtime, the generated code uses Apache DataFusion to execute SQL queries against the Parquet files
-4. **Caching** -- query results are cached for 5 minutes, and concurrent identical queries are coalesced into a single execution
+4. **Caching** -- query results are cached for 5 minutes, concurrent identical queries are coalesced into a single execution, and tables of up to 64 MB are kept in memory (see [In-Memory Tables](./massive-tables.md#in-memory-tables))
 
 This architecture allows Codcel-generated applications to handle datasets of any size while maintaining fast query response times.
 

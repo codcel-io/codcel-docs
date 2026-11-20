@@ -78,6 +78,8 @@ Generated code depends on this engine at runtime. The engine handles:
 - Array and matrix operations
 - Iterative calculation for circular references
 
+To see where a slow calculation spends its time, set `CODCEL_PROFILE` before running it. The engines then count per-request cache lookups and hits, fill-down cell reads and, for Parquet tables, SQL queries. Read the counts with `codcel_calculation_engine::profile::take()` and `codcel_parquet_engine::profile::take()`. `CODCEL_PROFILE_KEYS` also counts lookups and misses per cell, read with `codcel_calculation_engine::profile::take_top_keys(n)`, so a cell calculated more than once stands out. With neither variable set, the counters cost a check of a cached flag.
+
 ### Codcel Table Engine
 
 A Rust trait (`CodcelTable`) that defines a standard interface for table operations. This trait is implemented by both the Parquet Engine and the PostgreSQL Engine, allowing generated code to work with different backends through the same interface.
@@ -116,6 +118,7 @@ Used for [Massive Tables](./massive-tables.md) (billions of rows, read-only).
 - Implements the `CodcelTable` trait
 - Uses Apache DataFusion to execute SQL queries against Parquet files
 - Includes query caching (5-minute TTL) and request coalescing
+- Keeps tables of up to 64 MB in memory (see [In-Memory Tables](./massive-tables.md#in-memory-tables))
 - Supports sharded files (data split across multiple Parquet files)
 
 !!! note

@@ -163,6 +163,8 @@ The cells do not need their own `*O*` annotation. A cell that has one is also ge
 
 To give every cell of a combined output its own Rust function and tests as well, pass `--generate-cell-outputs` (desktop: **Settings → Generate an output for every cell of a range output**). It is off by default: a 100-row range would otherwise add 100 functions and 200 tests to the Rust calculation crate. Other languages always get just the combined output.
 
+The Rust code calculates a combined output's values one after another, so later values reuse lookups the earlier ones cached. If the values wait on database tables, such as PostgreSQL, `--concurrent-combined-outputs` (desktop: **Settings → Calculate combined output values concurrently**) runs them concurrently instead. That can overlap the queries, but a combined output with thousands of values may then be too large to compile.
+
 Use combined outputs when you want a single function or endpoint to return a group of related values.
 
 ---

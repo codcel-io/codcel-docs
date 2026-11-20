@@ -123,6 +123,14 @@ When using XLOOKUP or XMATCH on massive tables, the following match and search m
 
 ## Performance
 
+### In-Memory Tables
+
+A table of up to 64 MB, uncompressed, is loaded into memory the first time it is used, and later queries run against that copy instead of reading the Parquet files again. Rows keep their order, so results are the same either way. Larger tables are always queried from their files.
+
+Set `CODCEL_PARQUET_MEMORY_MAX_BYTES` to change the limit, in bytes, or to `0` to query every table from its files. Each table loaded counts against the process's memory, up to the limit per table.
+
+In-memory tables need `codcel-parquet-engine` 0.1.11 or later.
+
 ### Query Caching
 
 To avoid re-executing expensive queries, the Parquet engine caches query results with a **5-minute time-to-live (TTL)**. Repeated lookups with the same parameters return instantly from cache.
