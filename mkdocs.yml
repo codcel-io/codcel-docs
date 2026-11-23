@@ -47,6 +47,8 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -87,6 +89,8 @@ nav:
       - Settings: settings.md
       - Runtime Formatting: runtime-formatting.md
       - CLI: cli.md
+      - CI/CD Pipelines: ci-cd.md
+      - API Tokens: api-tokens.md
       - Testing: testing.md
   - Output Targets:
       - Overview: output-targets.md
