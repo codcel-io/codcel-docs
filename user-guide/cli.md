@@ -137,9 +137,38 @@ by every command:
 
 ## Authentication and Licensing
 
-Code generated **without** credentials is free and carries a *Non-Commercial* license notice.
-To generate commercially licensed code, the CLI needs credentials for your Codcel organization;
-each run then spends credits, exactly as the desktop app does.
+Without credentials the CLI generates only the **free base** — the Rust calculation library,
+the Rust model library and the tables — and the code carries a *Non-Commercial* license notice.
+This matches the desktop app when you are signed out.
+
+Every other target (Python, Java, the REST servers, web clients and so on) needs a commercial
+license: the CLI needs credentials for your Codcel organization, and each run spends credits,
+exactly as the desktop app does. [Buy credits](https://codcel.io/en/pricing) if you don't have
+an account yet.
+
+If you ask for targets without credentials — with `--targets` or in a `codcel.toml` project
+file — the CLI stops before generating anything, lists the targets by project type and explains
+how to continue (exit code 3):
+
+```text
+error: 2 targets need a commercial license, so nothing was generated:
+
+    Native (FFI)  ffi
+    Python        python
+
+  You are not signed in, so this is a Non-Commercial run.
+  Non-Commercial runs generate only the Rust calculation library, Rust model library and tables.
+
+  To generate these targets:
+    • No account yet? Buy credits at https://codcel.io/en/pricing
+    • Have an account? Create an API token in your Codcel account (Account > API tokens)
+      and set CODCEL_TOKEN=<token>, or run `codcel login`. Setup: https://docs.codcel.io/api-tokens/
+
+  To generate only the free base instead, run again without --targets.
+```
+
+`--non-commercial` behaves the same even when you are signed in: it generates the free base only,
+and asking for other targets with it is an error.
 
 The CLI looks for credentials in this order and uses the first it finds:
 
@@ -183,15 +212,15 @@ codcel generate model.xlsx --targets java --require-auth
 ```
 
 !!! warning "Use `--require-auth` in CI"
-    Without credentials the CLI still succeeds and produces Non-Commercial code. In a pipeline,
-    `--require-auth` (or `CODCEL_REQUIRE_AUTH=true`) turns a missing or misnamed secret into a
-    failed build instead.
+    Without credentials a run that needs no paid targets still succeeds and produces
+    Non-Commercial code. In a pipeline, `--require-auth` (or `CODCEL_REQUIRE_AUTH=true`) turns a
+    missing or misnamed secret into a failed build in every case.
 
 ### License notices
 
 | Credentials | Organization | Generated code |
 |-------------|--------------|----------------|
-| none, or `--non-commercial` | — | Non-Commercial license notice, no credits spent |
+| none, or `--non-commercial` | — | Free base only (Rust calculation and model libraries, tables), Non-Commercial license notice, no credits spent |
 | API token or login | standard (credits) | Commercial license, credits spent |
 | API token or login | unlimited plan | Commercial license, usage recorded, no credits deducted |
 | API token or login | evaluation (demo) | Evaluation-only license notice |
@@ -226,7 +255,8 @@ name of the API token that made it.
 ## Targets
 
 Without `--targets`, the CLI generates the Rust calculation library, the model library and the
-table data. Add targets as a comma-separated list, or use `--targets all`:
+table data. Add targets as a comma-separated list, or use `--targets all`. Targets need a
+commercial license; see [Authentication and Licensing](#authentication-and-licensing).
 
 ```bash
 codcel generate model.xlsx --targets python,java-server,typescript-client
@@ -474,7 +504,7 @@ The version string is passed through verbatim, so any Cargo requirement syntax w
 | `0` | Success |
 | `1` | Generation failed (the workbook could not be loaded or transpiled) |
 | `2` | Invalid command-line usage |
-| `3` | Authentication failed: missing (with `--require-auth`), invalid, expired or revoked credentials |
+| `3` | Authentication failed: missing (with `--require-auth`), invalid, expired or revoked credentials, or targets were requested without a commercial license |
 | `4` | Not enough credits, or the cost exceeds `--max-credits` |
 | `5` | The Codcel API could not be reached, or this CLI version is no longer supported |
 | `6` | The transpiler reported errors — or warnings, with `--fail-on-warnings` |
@@ -556,7 +586,8 @@ codcel completions powershell >> $PROFILE
 
 Earlier versions of the CLI had no subcommands. That syntax still works: an invocation that
 starts with options such as `-e`, `-p` or `-g` is run as `codcel generate`, generates every
-target as before, and keeps its earlier defaults and exit code. New scripts should use
+target as before, and keeps its earlier defaults and exit code. Without credentials it generates
+only the free base and says so, rather than failing. New scripts should use
 `codcel generate` with `--targets`.
 
 ---
