@@ -22,13 +22,15 @@ For example, the formula `=SORT(A1:A10)` returns all 10 values sorted, spilling 
 
 ## How Codcel Handles Dynamic Arrays
 
-When Codcel transpiles a dynamic array formula, the generated function returns an array (or 2D array) instead of a single value. The exact representation depends on the output target:
+When Codcel transpiles a dynamic array formula, the generated function returns an array (or 2D array) instead of a single value. A result that is one column (for example `FILTER` over one column) is a list; anything else is a list of rows. Every value in the array has the same type, chosen from the formula and the values Excel saved: numbers, text, booleans, dates or times. An array that mixes text and numbers is returned as text.
 
-- **Rust:** `Vec<Value>` or `Vec<Vec<Value>>`
-- **Java/Kotlin:** `List<Object>` or `List<List<Object>>`
+- **Rust:** `Vec<f64>`, `Vec<String>`, `Vec<Vec<f64>>`, `Vec<Vec<String>>` and so on
+- **Java/Kotlin:** `List<Double>`, `List<String>`, `List<List<Double>>` and so on
 - **Python:** `list` or `list[list]`
-- **C#:** `List<object>` or `List<List<object>>`
+- **C#:** `List<double>`, `List<string>`, `List<List<double>>` and so on
 - **JSON (REST API):** JSON arrays
+
+The array has as many values as the formula returns for the inputs given, which need not be the size Excel saved. For example, `=FILTER(G47:G146, B47:B146<>"")` returns one value per non-blank row.
 
 If a dynamic array result is used as an input to another formula, Codcel handles the reference correctly -- just as Excel's spill references work.
 
@@ -37,6 +39,14 @@ If a dynamic array result is used as an input to another formula, Codcel handles
 ## Annotating Array Outputs
 
 To mark a dynamic array result as an output, use the standard `*O*` annotation on the cell containing the array formula. The generated code will return the full array.
+
+### Generated tests for array outputs
+
+The generated tests check an array output against everything Excel saved for it: the formula cell and the cells its result spilled into. Each array output is checked in one call. The call first checks the length (or the number of rows and columns), then each value. Numbers are compared within the same tolerance as single values (0.000001); text, booleans, dates and times must be equal. A blank cell in the spill counts as an empty string in a text array and as 0 in a number array.
+
+A very large array is checked on its size and its first 1,000 values, so the test files stay small. Change the limit with `--max-test-array-elements <N>`, or `max_test_array_elements` in the `[cli]` section of the configuration file.
+
+This needs the workbook as Excel saved it. In `.xlsx` and `.xlsb` files Excel records the range each array formula spills into, and Codcel reads the saved values from that range.
 
 To mark an array as an input, use `*I*`, `*ID*`, or `*IX*` annotations. The generated code will accept an array parameter.
 

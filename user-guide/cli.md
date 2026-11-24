@@ -349,7 +349,7 @@ the defaults. Relative paths in the file are resolved against the file's directo
 
 The `[cli]` section accepts `output`, `table_path`, `table_type`, `targets` (a list such as
 `["python", "java-server"]` or `["all"]`; when present it replaces `[settings]`), `language`,
-`large_array_threshold`, `csv_files`, `parquet_files`, `discover_data`, `io_config` and the four
+`large_array_threshold`, `max_test_array_elements`, `csv_files`, `parquet_files`, `discover_data`, `io_config` and the four
 `*_engine_version` keys.
 
 When the file comes from the desktop app, output defaults to the project's `code/` and `tables/`
@@ -447,6 +447,7 @@ warning `T29` — see [Date Handling](./differences/date-handling.md) for what t
 | Option | Default | Description |
 |--------|---------|-------------|
 | `--large-array-threshold <N>` | `100` | Row count above which array constants are externalised to separate files (prevents slow compilation) |
+| `--max-test-array-elements <N>` | `1000` | Most values of one array output a generated test checks; a larger array is checked on its length (or rows and columns) and its first values |
 | `--generate-cell-outputs[=BOOL]` | `false` | Give each cell of a combined output (`*O*B1:B100*Name` or `*O*A1;C5*Name`) its own Rust function and tests. Off, the cells are calculated and tested only as part of the combined output. Other languages always get just the combined output |
 | `--concurrent-combined-outputs[=BOOL]` | `false` | Calculate the values of a combined output concurrently (`tokio::join!`) instead of one after another. This can be faster when the values wait on database tables such as PostgreSQL. Otherwise it is no faster, and repeated lookups are not shared through the cache. A combined output with thousands of values may not compile in this mode. Rust only |
 
