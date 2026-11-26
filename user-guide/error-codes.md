@@ -78,6 +78,36 @@ These codes appear when generating code for a specific output target:
 
 ---
 
+### T31 - A formula calls a VBA function
+
+**Type:** Warning
+
+**Message:** The formulas call the VBA function {module}.{function}: its Rust is `{rust_name}` in src/vba_manual.rs
+
+**Fix:** Write the function's Rust in `src/vba_manual.rs`, where Codcel left a stub with the original VBA. Until then, the cells that call it return an error. `cargo test vba` checks your Rust against Excel's saved results. See [VBA Functions](./vba-functions.md).
+
+---
+
+### T32 - VBA procedure cannot be called from a cell
+
+**Type:** Error
+
+**Message:** The formula at {sheet}!{cell} calls the VBA procedure {module}.{name}, which a cell cannot call: {reason}. Or: the VBA function '{name}' is defined in more than one module.
+
+**Fix:** Make the procedure a `Public Function` in a standard module. If two modules define the same name, write the module in the formula, e.g. `=Pricing.Rate(A1)`.
+
+---
+
+### T33 - VBA that Codcel does not run
+
+**Type:** Warning
+
+**Message:** The workbook has VBA macros that Codcel does not run: {procedures}
+
+**Fix:** The generated code works from the values the workbook was saved with. If a macro or event procedure changes cells that the outputs depend on, move that logic into formulas or make those cells inputs.
+
+---
+
 ### T6 - No calculations to process
 
 **Type:** Error
@@ -99,6 +129,16 @@ These codes appear when generating code for a specific output target:
 ---
 
 ## Common Loader Codes (L)
+
+### L36 - VBA project could not be read
+
+**Type:** Warning
+
+**Message:** The workbook's VBA project could not be read
+
+**Fix:** Formulas that call VBA functions will not convert. Open the workbook in Excel, check the VBA project compiles (Debug > Compile VBAProject), and save it again.
+
+---
 
 ### L12 - Sheet name contains invalid characters
 

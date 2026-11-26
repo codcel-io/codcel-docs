@@ -110,6 +110,7 @@ nav:
       - Dynamic Arrays: dynamic-arrays.md
       - Functional Programming: functional-programming.md
       - Circular References: circular-references.md
+      - VBA Functions: vba-functions.md
   - Function Reference:
       - Alphabetical List: alphabetical-functions.md
       - Mathematical Functions: mathematical-functions.md
