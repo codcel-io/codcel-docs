@@ -118,6 +118,7 @@ to the workbook's file name.
 | `codcel targets` | List the available targets, their dependencies and credit prices |
 | `codcel detect-io` | Review the workbook's inputs and outputs and save the selection to `codcel-io.toml` |
 | `codcel credits` | Show the credit balance of your organization |
+| `codcel tables convert` | Replace a deployed project's generated tables from new copies of the workbook's tables; see [Updating Tables](#updating-tables) |
 | `codcel login` | Sign in with an email link, or save an API token |
 | `codcel logout` | Remove saved credentials |
 | `codcel auth status` | Show which credentials are in use, and for which user and organization |
@@ -297,6 +298,7 @@ desktop app's `codcel.toml` are accepted too.
 | Web | `javascript-client` | JavaScript web client | |
 | Web | `typescript-client` | TypeScript web client | |
 | Swift | `swift` | Swift calculation library | `ffi` |
+| Tables | `table-mapping` | Table templates and the mapping used by [`codcel tables convert`](#updating-tables) | |
 
 See [Output Targets](./output-targets.md) for what each target contains.
 
@@ -496,6 +498,126 @@ The version string is passed through verbatim, so any Cargo requirement syntax w
 
 ---
 
+## Updating Tables
+
+The generated code reads its lookup tables — the ranges your workbook passes to VLOOKUP, XLOOKUP,
+MATCH, INDEX, HLOOKUP, FILTER and the CRUD functions — from Parquet files, and from PostgreSQL for
+CRUD tables. Each lookup gets a table shaped for its function, so one table in the workbook can
+become several generated tables.
+
+`codcel tables convert` replaces all of them from a new copy of the table **in the shape it has
+in the workbook**, without generating code again. It needs the `table-mapping` target, which
+writes a `<project>-table-mapping/` directory into the project:
+
+| Path | What it is |
+|------|------------|
+| `mapping.json` | How every generated table is built from the workbook's tables. Do not edit it |
+| `README.md` | The project's tables, their generated tables, and the cells an update cannot change |
+| `templates/<table>.xlsx`, `templates/<table>.csv` | Each table as it is now, ready to edit |
+| `templates/<table>.empty.xlsx`, `templates/<table>.empty.csv` | Each table's header row only |
+
+Generating with `table-mapping` also reports warning `T30` for every table whose cells are
+hard-coded in the generated code (see [below](#what-an-update-cannot-change)).
+
+```bash
+# Generate once, with the mapping
+codcel generate model.xlsx --targets table-mapping
+
+# Later: check an edited template, then apply it
+codcel tables convert --mapping codcel-output/model/model-table-mapping/mapping.json \
+    --input rates_a2_d40.xlsx --tables-dir /srv/model/tables --dry-run
+codcel tables convert --mapping codcel-output/model/model-table-mapping/mapping.json \
+    --input rates_a2_d40.xlsx --tables-dir /srv/model/tables
+```
+
+Restart the application afterwards: it caches table data, so it only sees the new tables once
+restarted. Back up the `tables` directory (and the PostgreSQL database) first. The
+[desktop app](./desktop-app.md) offers the same update on the project's **Codcel Table Mapping**
+page.
+
+| Option | Description |
+|--------|-------------|
+| `--mapping <FILE>` | The `mapping.json` the `table-mapping` target generated. Required |
+| `-i`, `--input <FILE>` | An edited table: `.xlsx`, `.xlsm`, `.xls`, `.ods` or `.csv`. Repeat to update several tables at once. Required |
+| `--tables-dir <DIR>` | The deployed project's `tables` directory, the one holding `tables.json`. Required |
+| `--source <TABLE>` | The table the input is — a table id from the README, or a `T_` sheet — when its file name does not say. Only with a single `--input` |
+| `--sheet <NAME>` | The worksheet to read from a workbook input. Default: the table's own sheet, else the first |
+| `--dry-run` | Check the inputs and show what would change, without writing anything |
+| `--allow-stale-code` | Accept changes to hard-coded cells. The calculation does not see them until the code is generated again |
+| `--postgres-url <URL>` | PostgreSQL server URL without the database name, as the application's `CODCEL_POSTGRESQL_URL`. For projects with CRUD tables |
+| `--replace-crud-data` | Replace CRUD tables, discarding the rows the application has added, changed or deleted |
+| `--csv-delimiter <CHAR>` | Field delimiter of CSV inputs. Default `,` |
+| `--output-format <text\|json>` | Print a JSON report on standard output |
+
+It needs no sign-in and spends no credits: the `table-mapping` target is paid for when the code
+is generated.
+
+### Which table an input is
+
+An input is matched to a table by, in order: `--source`; its file name (`<table>.xlsx`,
+`<table>.empty.csv`, `T_<SHEET>.csv`, ignoring case); and finally its header row, when exactly one
+table has that header. The table ids are the template names, such as `rates_a2_d40`.
+
+An input's first row is its header, followed by the table's rows. In a CSV, each column is read
+as the kind of value it held in the workbook, so `007` stays text in a text column. Dates are
+`yyyy-mm-dd` or `yyyy-mm-dd hh:mm:ss`; true/false values are `TRUE` and `FALSE`.
+
+### What an update cannot change
+
+Every check runs before anything is written. If one fails, the command lists **every** problem
+and changes nothing. An update is refused when it:
+
+- changes the **header row**, the number of columns, or the **number of rows** of a table;
+- changes a **formula cell** (grey in the `.xlsx` templates). The generated code computes it, so
+  an input may leave it blank or keep its value, but not change it;
+- changes a **hard-coded cell** (orange in the `.xlsx` templates): a cell some formula uses
+  directly (`=Rates!B5`, `SUM(Rates!B2:B9)`, `OFFSET`), whose value is therefore a literal in the
+  generated code. Changing it needs the code generating again, unless you pass
+  `--allow-stale-code`;
+- puts a value of the wrong kind into a column, such as text into a number column;
+- supplies only one of the tables a generated table is built from — upload them together;
+- uses a mapping from a different generation than the deployed `tables.json`.
+
+`T_` sheets, which the generated code reads as they are, are replaced from a file named after the
+sheet (`T_RATES.csv`). Unlike other tables, they may gain or lose rows, but each column must keep
+its kind of value; whole numbers are accepted in a decimal column.
+
+### CRUD tables
+
+CRUD tables live in PostgreSQL, where the application changes their rows as it runs. Replacing
+one discards those changes, so it needs both `--replace-crud-data` and a PostgreSQL URL; the
+command checks it can connect before touching any file. After writing the new Parquet files it
+drops the project's CRUD tables in one transaction, and the application recreates them from the
+new data when it next starts.
+
+```bash
+codcel tables convert --mapping model-table-mapping/mapping.json \
+    --input customers_a1_e200.csv --tables-dir /srv/model/tables \
+    --postgres-url "$CODCEL_POSTGRESQL_URL" --replace-crud-data
+```
+
+### JSON report
+
+With `--output-format json`, a successful run prints:
+
+```json
+{
+  "ok": true,
+  "report": {
+    "dry_run": false,
+    "uploads": [ { "file": "rates_a2_d40.xlsx", "table": "rates_a2_d40", "rows": 39 } ],
+    "tables": [ "rates_a2_d40_vlookup.parquet", "rates_a2_d40_match.parquet" ],
+    "postgres_tables": [],
+    "stale_code_cells": [],
+    "warnings": []
+  }
+}
+```
+
+and a refused one prints `{ "ok": false, "problems": [ "…" ] }` and exits with `1`.
+
+---
+
 ## Scripting
 
 ### Exit codes
@@ -509,6 +631,8 @@ The version string is passed through verbatim, so any Cargo requirement syntax w
 | `4` | Not enough credits, or the cost exceeds `--max-credits` |
 | `5` | The Codcel API could not be reached, or this CLI version is no longer supported |
 | `6` | The transpiler reported errors — or warnings, with `--fail-on-warnings` |
+
+`codcel tables convert` exits with `1` when it refuses an update; nothing has been changed.
 
 With exit code 6 the output has been generated (and paid for); the errors point at cells whose
 generated code will not compile or will not match Excel. Messages link to
@@ -550,7 +674,8 @@ codcel generate model.xlsx --targets python --output-format json > result.json
 }
 ```
 
-`codcel targets`, `codcel credits` and `codcel auth status` accept `--output-format json` too.
+`codcel targets`, `codcel credits`, `codcel auth status` and `codcel tables convert` accept
+`--output-format json` too.
 
 ### Environment variables
 
@@ -564,6 +689,7 @@ codcel generate model.xlsx --targets python --output-format json > result.json
 | `CODCEL_TARGETS` | `--targets` | Comma-separated targets |
 | `CODCEL_CONFIG` | `--config` | Project file |
 | `CODCEL_OUTPUT_FORMAT` | `--output-format` | `text` or `json` |
+| `CODCEL_POSTGRESQL_URL` | `--postgres-url` | PostgreSQL server URL for `codcel tables convert` |
 | `CODCEL_CONFIG_DIR` | — | Directory for saved credentials, instead of the OS default |
 | `NO_COLOR` | `--color never` | Disable colors |
 | `HTTPS_PROXY` | — | Proxy for requests to the Codcel API |
@@ -667,6 +793,7 @@ file rather than in `codcel.toml`. See [Inputs & Outputs](./inputs-outputs.md).
 - [CI/CD Pipelines](./ci-cd.md) — running the CLI in GitHub Actions, GitLab CI, Azure DevOps, Jenkins and Bitbucket
 - [API Tokens](./api-tokens.md) — creating, rotating and revoking tokens
 - [Inputs & Outputs](./inputs-outputs.md) — reviewing, renaming and auto-detecting inputs and outputs
+- [Tables](./tables.md) — how the generated code stores and reads table data
 - [Settings Reference](./settings.md) — full reference for all configuration options
 - [Runtime Formatting](./runtime-formatting.md) — runtime locale detection and `CODCEL_*` environment variable overrides
 - [Desktop Application Guide](./desktop-app.md) — using the graphical interface instead

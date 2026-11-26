@@ -257,6 +257,7 @@ use_codcel_typescript_web_client = false
 use_codcel_swift_calculation_library = false
 use_codcel_excel_python_xlwings = false
 use_codcel_excel_web_client_python_xlwings = false
+use_codcel_table_mapping = false
 ```
 
 Changes made through the Settings view and Generate Project view are written to this file automatically when you click Save or Generate.
