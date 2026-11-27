@@ -140,6 +140,16 @@ These codes appear when generating code for a specific output target:
 
 ---
 
+### L37 - Error value typed into a cell is kept as text
+
+**Type:** Warning
+
+**Message:** Error value {error} typed into cell {sheet}!{cell} is kept as text
+
+**Fix:** An error typed into a cell (not calculated by a formula) is converted to that error for #N/A, #DIV/0!, #NUM!, #VALUE! and #REF!. Other error values, such as #NAME? or #NULL!, are kept as text. Replace the cell with a formula, or with one of those errors (for example `=NA()`), if formulas reading it should see an error.
+
+---
+
 ### L12 - Sheet name contains invalid characters
 
 **Type:** Warning
