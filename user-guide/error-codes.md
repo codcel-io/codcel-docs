@@ -146,7 +146,7 @@ These codes appear when generating code for a specific output target:
 
 **Message:** Error value {error} typed into cell {sheet}!{cell} is kept as text
 
-**Fix:** An error typed into a cell (not calculated by a formula) is converted to that error for #NULL!, #DIV/0!, #VALUE!, #REF!, #NAME?, #NUM!, #N/A, #SPILL! and #CALC!, so formulas reading the cell see the error, as in Excel. Other error values, such as #FIELD!, #BUSY! or #CONNECT!, are kept as text: they come from linked data types and external connections, and are rarely typed. Replace the cell with a formula, or with one of the errors above (for example `#N/A`), if formulas reading it should see an error.
+**Fix:** An error typed into a cell (not calculated by a formula) is converted to that error for #NULL!, #DIV/0!, #VALUE!, #REF!, #NAME?, #NUM! and #N/A, so formulas reading the cell see the error, as in Excel. Newer error values are kept as text. Excel itself reads a typed #SPILL! or #CALC! as text, because it only produces them as formula results, and #FIELD!, #BUSY! and the like have no Codcel equivalent. Replace the cell with a formula, or with one of the errors above (for example `#N/A`), if formulas reading it should see an error. A formula whose saved result is #SPILL! or #CALC! is read as that error in .xlsx and .xlsb files. An .xls file keeps only #VALUE! for them, because the format has no place for the newer errors.
 
 ---
 
