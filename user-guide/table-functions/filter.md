@@ -33,7 +33,7 @@ If finding nothing is a normal outcome, give `FILTER` an `if_empty`. The generat
     =FILTER(A1:B10, B1:B10>500, "None")      returns "None"
     =FILTER(A1:B10, B1:B10>500, 0)           returns the number 0
 
-An `if_empty` that refers to an empty cell counts as no `if_empty` (Excel would return 0); write the value itself instead.
+As in Excel, an `if_empty` that refers to an empty cell returns 0, and an `if_empty` left empty (`=FILTER(A1:B10, B1:B10>500, )`) counts as none, so it gives `#CALC!`.
 
 ## Key Features
 
