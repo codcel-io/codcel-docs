@@ -23,6 +23,18 @@ This powerful function is part of Excel's dynamic array functions, making it inc
 
 The `FILTER` function returns an array of values that meet the specified criteria. If the `if_empty` parameter is provided, that value will be returned when no records meet the condition.
 
+## When nothing matches
+
+As in Excel, a `FILTER` that matches nothing and has no `if_empty` is the `#CALC!` error, so `IFERROR`, `ISERROR` and `ERROR.TYPE` (14) see it as they do in your workbook. In the generated code, the calculation fails with the message `#CALC! FILTER: no rows match the condition ...`.
+
+If finding nothing is a normal outcome, give `FILTER` an `if_empty`. The generated code then returns that value as an ordinary result:
+
+    =FILTER(A1:B10, B1:B10>500, "")          returns empty text
+    =FILTER(A1:B10, B1:B10>500, "None")      returns "None"
+    =FILTER(A1:B10, B1:B10>500, 0)           returns the number 0
+
+An `if_empty` that refers to an empty cell counts as no `if_empty` (Excel would return 0); write the value itself instead.
+
 ## Key Features
 
 - **Dynamic Array Function**: As a dynamic array function, `FILTER` automatically spills the results over adjacent cells vertically or horizontally, depending on the shape of the returned array.
